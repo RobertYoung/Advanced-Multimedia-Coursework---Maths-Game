@@ -11,10 +11,18 @@
 		public function Raindrop(setNumber:Number = 00) {
 			this.SetNumber(setNumber);
 		}
-		
+
+		//******************//
+		// NUMBER FUNCTIONS //
+		//******************//
 		public function SetNumber(setNumber:Number)
 		{
 			this.number_txt.text = setNumber.toString();
+		}
+		
+		public function GetNumber():Number
+		{
+			return parseInt(this.number_txt.text);
 		}
 	}
 	

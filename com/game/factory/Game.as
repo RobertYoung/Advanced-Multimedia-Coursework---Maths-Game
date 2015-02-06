@@ -15,6 +15,9 @@
 		var duration:Number = 10;
 		var rainTimer:Timer;
 		
+		// Function variables
+		var updateScoresFunction:Function;
+		
 		public function Game(setMain:Main) {
 			this.main = setMain;
 		}
@@ -61,7 +64,6 @@
 		
 		private function RemoveRaindrop(raindrop:Raindrop)
 		{
-			trace(raindrop.parent);
 			raindrop.parent.removeChild(raindrop);
 		}
 		
@@ -86,10 +88,23 @@
 			
 			if (raindrop.hitTestObject(this.main.swfBucket.bucket_mc) == true)
 			{
-				if (raindrop.parent != null)
-					this.RemoveRaindrop(raindrop);
+				raindrop.removeEventListener(Event.ENTER_FRAME, CheckRaindropHitsBucket);
+				
+				var number:Number = raindrop.GetNumber();
+				
+				if (this.updateScoresFunction != null)
+					this.updateScoresFunction(number);
+				
+				this.RemoveRaindrop(raindrop);
 			}
 		}
+		
+		//*************************//
+		// UPDATE SCORES FUNCTIONS //
+		//*************************//
+		public function SetUpdateScoreFunction(setFunction:Function)
+		{
+			this.updateScoresFunction = setFunction;
+		}
 	}
-	
 }

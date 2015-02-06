@@ -27,7 +27,21 @@
 			this.game = this.main.game;
 			this.numberToMake_txt.text = this.game.GenerateRandomNumber(20, 500).toString();
 			
+			this.game.SetUpdateScoreFunction(this.SetCurrentNumber);
 			this.game.StartRain();
+		}
+		
+		//**************************//
+		// CURRENT NUMBER FUNCTIONS //
+		//**************************//
+		private function SetCurrentNumber(setNumber:Number)
+		{
+			this.currentNumber_txt.text = (this.GetCurrentNumber() + setNumber).toString();
+		}
+		
+		private function GetCurrentNumber():Number
+		{
+			return parseInt(this.currentNumber_txt.text);
 		}
 	}
 	

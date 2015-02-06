@@ -20,6 +20,7 @@
 			
 			this.bucket_mc.addEventListener(MouseEvent.MOUSE_DOWN, StartDrag);
 			this.bucket_mc.addEventListener(MouseEvent.MOUSE_UP, StopDrag);
+			this.bucket_mc.addEventListener(MouseEvent.RELEASE_OUTSIDE, StopDrag);
 		}
 		
 		private function StartDrag(e:MouseEvent)

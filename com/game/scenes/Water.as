@@ -18,7 +18,7 @@
 		
 		public function IncreaseWaterLevel()
 		{
-			this.waterFill_mc.y = this.waterFill_mc.y - 10;
+			this.waterFill_mc.y = this.waterFill_mc.y - 2;
 		}
 	}
 	

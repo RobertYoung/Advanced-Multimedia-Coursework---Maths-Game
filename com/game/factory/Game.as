@@ -98,14 +98,14 @@
 			var point:Point = new Point();
 			
 			point.x = this.GenerateRandomNumber(50, 984);
-			point.y = this.GenerateRandomNumber(-100, -1000);
+			point.y = this.GenerateRandomNumber(-100, -400);
 			
 			return point;
 		}
 		
 		private function RandomRaindropnumber():Number
 		{
-			return this.GenerateRandomNumber(1, 20);
+			return this.GenerateRandomNumber(20, 20);
 		}
 		
 		private function CheckRaindropHitsBucket(e:Event)

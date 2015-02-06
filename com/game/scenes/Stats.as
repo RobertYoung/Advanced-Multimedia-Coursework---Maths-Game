@@ -10,7 +10,7 @@
 			/* DO NOT PUT ANYTHING IN HERE */
 		}
 		
-		public function init()
+		public function Init()
 		{
 			trace("STATS SWF LOADED");
 		}

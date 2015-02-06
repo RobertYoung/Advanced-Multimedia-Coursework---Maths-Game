@@ -21,7 +21,7 @@
 			/* DO NOT PUT ANYTHING IN HERE */
 		}
 		
-		public function init()
+		public function Init()
 		{
 			trace("SWF MENU LOADED");
 			

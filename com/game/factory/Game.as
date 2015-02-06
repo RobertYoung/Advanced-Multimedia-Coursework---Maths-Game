@@ -4,6 +4,7 @@
 	import flash.geom.Point;
 	import com.greensock.TweenMax;
 	import com.greensock.events.LoaderEvent;
+	import com.greensock.easing.*;
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
 	import flash.events.Event;
@@ -12,7 +13,7 @@
 
 		// Game variables
 		var main:Main;
-		var duration:Number = 10;
+		var duration:Number = 8;
 		var rainTimer:Timer;
 		
 		// Function variables
@@ -74,9 +75,16 @@
 			
 			main.addChild(raindrop);
 			
-			var raindropTween:TweenMax = new TweenMax(raindrop, duration, { x: point.x, y: 1200, onComplete: this.RemoveRaindrop, onCompleteParams: [raindrop] });
+			var raindropTween:TweenMax = new TweenMax(raindrop, duration, { x: point.x, y: 850, onComplete: this.RaindropTweenComplete, onCompleteParams: [raindrop], ease: Circ.easeIn});
 			
 			raindropTween.play();
+		}
+		
+		private function RaindropTweenComplete(raindrop:Raindrop)
+		{
+			this.RemoveRaindrop(raindrop);
+			
+			this.main.swfWater.IncreaseWaterLevel();
 		}
 		
 		private function RemoveRaindrop(raindrop:Raindrop)
@@ -90,7 +98,7 @@
 			var point:Point = new Point();
 			
 			point.x = this.GenerateRandomNumber(50, 984);
-			point.y = this.GenerateRandomNumber(-100, -500);
+			point.y = this.GenerateRandomNumber(-100, -1000);
 			
 			return point;
 		}

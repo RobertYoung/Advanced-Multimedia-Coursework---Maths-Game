@@ -25,19 +25,15 @@
 		
 		private function StartDrag(e:MouseEvent)
 		{
-			var target:MovieClip = e.target as MovieClip;
-			
 			var rect:Rectangle = new Rectangle(this.bucketPlaceholder_mc.x, this.bucketPlaceholder_mc.y,
 												this.bucketPlaceholder_mc.width, this.bucketPlaceholder_mc.height);
 			
-			target.startDrag(false, rect);
+			bucket_mc.startDrag(false, rect);
 		}
 		
-		private function StopDrag(e:MouseEvent)
+		public function StopDrag(e:MouseEvent = null)
 		{
-			var target:MovieClip = e.target as MovieClip;
-			
-			target.stopDrag();
+			bucket_mc.stopDrag();
 		}
 	}
 }

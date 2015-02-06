@@ -38,6 +38,11 @@
 		public var swfBucket:Bucket;
 		public var swfWater:Water;
 		
+		//***************//
+		// GAME ELEMENTS //
+		//***************//
+		public static const ELEMENT_INCORRECT_ALERTVIEW:String = "incorrect_alertview";
+		
 		//*********//
 		// LOADING //
 		//*********//

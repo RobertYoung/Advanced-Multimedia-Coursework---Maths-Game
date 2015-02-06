@@ -34,6 +34,23 @@
 			rainTimer.start();
 		}
 		
+		//**********************//
+		// RESET GAME FUNCTIONS //
+		//**********************//
+		public function ResetAfterError()
+		{
+			this.rainTimer.stop();
+			this.main.swfBucket.StopDrag();
+		}
+		
+		private function InErrorState():Boolean
+		{
+			if (this.main.getChildByName(Main.ELEMENT_INCORRECT_ALERTVIEW) == null)
+				return false;
+			
+			return true;
+		}
+		
 		//****************//
 		// RANDOM NUMBERS //
 		//****************//
@@ -89,6 +106,10 @@
 			
 			if (raindrop.hitTestObject(this.main.swfBucket.bucket_mc) == true)
 			{
+				// Check to see if there is an error alertview
+				if (this.InErrorState())
+					return; 
+			
 				raindrop.removeEventListener(Event.ENTER_FRAME, CheckRaindropHitsBucket);
 				
 				var number:Number = raindrop.GetNumber();

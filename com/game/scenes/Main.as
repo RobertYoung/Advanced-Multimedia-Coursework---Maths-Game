@@ -202,14 +202,14 @@
 			this.swfWater = LoaderMax.getContent(Main.SWF_WATER).rawContent as Water;
 			this.swfBucket = LoaderMax.getContent(Main.SWF_BUCKET).rawContent as Bucket;
 			
+			this.CreateNewGame();
+			
 			this.swfBackButton.Init();
 			this.swfHeaderAddition.Init();
 			this.swfWater.Init();
 			this.swfBucket.Init();
 			
 			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadPlayFromMouseEvent);
-			
-			this.CreateNewGame();
 		}
 		
 		public function LoadAdditionFromMouseEvent(e:MouseEvent)
@@ -222,7 +222,7 @@
 		//****************//
 		private function CreateNewGame()
 		{
-			this.game = new Game();
+			this.game = new Game(this);
 		}
 		
 		//******************//

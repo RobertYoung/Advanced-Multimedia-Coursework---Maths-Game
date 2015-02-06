@@ -3,6 +3,8 @@
 	import flash.display.MovieClip;
 	import flash.text.TextField;
 	import com.game.factory.Game;
+	import flash.utils.Timer;
+	import flash.events.TimerEvent;
 	
 	
 	public class HeaderAddition extends MovieClip {
@@ -34,9 +36,35 @@
 		//**************************//
 		// CURRENT NUMBER FUNCTIONS //
 		//**************************//
+		private var updateNumbers:Array;
+		private var updateNumberTimer:Timer;
+		
 		private function SetCurrentNumber(setNumber:Number)
 		{
-			this.currentNumber_txt.text = (this.GetCurrentNumber() + setNumber).toString();
+			var currentNumber:Number = this.GetCurrentNumber();
+		
+			updateNumbers = new Array();
+			
+			for (var i = currentNumber; i <= (currentNumber + setNumber); i++)
+			{
+				updateNumbers.push(i);
+			}
+		
+			updateNumberTimer = new Timer(20);
+			
+			updateNumberTimer.addEventListener(TimerEvent.TIMER, this.UpdateCurrentNumber);
+			updateNumberTimer.start();
+		}
+		
+		private function UpdateCurrentNumber(e:TimerEvent = null)
+		{
+			if (this.updateNumbers[0] != null)
+			{
+				this.currentNumber_txt.text = this.updateNumbers[0].toString();
+				this.updateNumbers.shift();
+			}else{
+				this.updateNumberTimer.stop();
+			}
 		}
 		
 		private function GetCurrentNumber():Number

@@ -64,7 +64,8 @@
 		
 		private function RemoveRaindrop(raindrop:Raindrop)
 		{
-			raindrop.parent.removeChild(raindrop);
+			if (raindrop.parent != null)
+				raindrop.parent.removeChild(raindrop);
 		}
 		
 		private function RandomRaindropPosition():Point

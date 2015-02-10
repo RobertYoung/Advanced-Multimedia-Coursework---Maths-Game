@@ -6,6 +6,7 @@
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
 	import com.game.elements.IncorrectAlertview;
+	import com.game.elements.CompleteAlertview;
 	
 	
 	public class HeaderAddition extends MovieClip {
@@ -121,10 +122,16 @@
 			}else if (this.currentNumber == this.numberToMake)
 			{
 				// Correct
-				this.IncrementLevel();
-				this.SetNumberToMake(0);
-				this.SetRandomNumberToMake();
-				this.SetCurrentNumber(0, false);
+				if (this.levelNumber == 2)
+				{
+					this.main.game.SetGameComplete();
+					this.GameComplete();
+				}else{
+					this.IncrementLevel();
+					this.SetNumberToMake(0);
+					this.SetRandomNumberToMake();
+					this.SetCurrentNumber(0, false);
+				}
 			}
 		}
 		
@@ -141,6 +148,16 @@
 		{
 			this.levelNumber++;
 			this.SetLevel(this.levelNumber);
+		}
+		
+		//****************//
+		// GAME FUNCTIONS //
+		//****************//
+		public function GameComplete()
+		{
+			var alertview:CompleteAlertview = new CompleteAlertview("You have successfully completed all the addition levels");
+			
+			this.main.addChild(alertview);
 		}
 	}
 	

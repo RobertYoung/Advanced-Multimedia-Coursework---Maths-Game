@@ -52,6 +52,24 @@
 			return true;
 		}
 		
+		//***************//
+		// GAME COMPLETE //
+		//***************//
+		private function IsGameComplete():Boolean
+		{
+			if (this.main.getChildByName(Main.ELEMENT_COMPLETE_ALERTVIEW) == null)
+				return false;
+			
+			return true;
+		}
+		
+		public function SetGameComplete()
+		{
+			this.rainTimer.stop();
+			this.main.swfBucket.StopDrag();
+			this.FadeAllRaindrops();
+		}
+		
 		//****************//
 		// RANDOM NUMBERS //
 		//****************//
@@ -72,6 +90,7 @@
 			raindrop.y = point.y;
 			raindrop.SetNumber(this.RandomRaindropnumber());
 			raindrop.addEventListener(Event.ENTER_FRAME, CheckRaindropHitsBucket);
+			raindrop.name = Main.ELEMENT_RAINDROP;
 			
 			main.addChild(raindrop);
 			
@@ -84,7 +103,8 @@
 		{
 			this.RemoveRaindrop(raindrop);
 			
-			this.main.swfWater.IncreaseWaterLevel();
+			if (!raindrop.GetCaught())
+				this.main.swfWater.IncreaseWaterLevel();
 		}
 		
 		private function RemoveRaindrop(raindrop:Raindrop)
@@ -114,8 +134,8 @@
 			
 			if (raindrop.hitTestObject(this.main.swfBucket.bucket_mc) == true)
 			{
-				// Check to see if there is an error alertview
-				if (this.InErrorState())
+				// Check to see if there is an error alertview or complete alertview
+				if (this.InErrorState() || this.IsGameComplete())
 					return; 
 			
 				raindrop.removeEventListener(Event.ENTER_FRAME, CheckRaindropHitsBucket);
@@ -125,7 +145,23 @@
 				if (this.updateScoresFunction != null)
 					this.updateScoresFunction(number);
 				
+				raindrop.SetCaught();
+				
 				this.RemoveRaindrop(raindrop);
+			}
+		}
+		
+		private function FadeAllRaindrops()
+		{
+			for (var i = 0; i < this.main.numChildren; i++)
+			{
+				if (this.main.getChildAt(i).name == Main.ELEMENT_RAINDROP)
+				{
+					var raindrop:Raindrop = this.main.getChildAt(i) as Raindrop;
+					
+					raindrop.removeEventListener(Event.ENTER_FRAME, CheckRaindropHitsBucket);
+					raindrop.StartFade();
+				}
 			}
 		}
 		

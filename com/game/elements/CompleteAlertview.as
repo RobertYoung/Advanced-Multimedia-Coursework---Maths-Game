@@ -4,13 +4,17 @@
 	import flash.text.TextField;
 	import flash.events.Event;
 	import com.game.scenes.Main;
+	import flash.events.MouseEvent;
 	
 	public class CompleteAlertview extends MovieClip {
 		
+		// Elements on alertview
 		public var description_txt:TextField;
+		public var next_btn:MovieClip;
 		
-		public function CompleteAlertview(setDescription:String) {
+		public function CompleteAlertview(setDescription:String, setNextButtonFunction:Function) {
 			this.SetDescription(setDescription);
+			this.SetNextButtonFunction(setNextButtonFunction);
 			
 			this.addEventListener(Event.ADDED_TO_STAGE, AddedToStage);
 		}
@@ -31,6 +35,14 @@
 		public function SetDescription(setDescription:String)
 		{
 			this.description_txt.text = setDescription;
+		}
+		
+		//***********************//
+		// NEXT BUTTON FUNCTIONS //
+		//***********************//
+		public function SetNextButtonFunction(setFunction:Function)
+		{
+			this.next_btn.addEventListener(MouseEvent.MOUSE_UP, setFunction);
 		}
 	}
 	

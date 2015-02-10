@@ -6,6 +6,7 @@
 	import com.greensock.events.LoaderEvent;
 	import flash.events.MouseEvent;
 	import com.game.factory.Game;
+	import com.game.elements.Raindrop;
 	
 	
 	public class Main extends MovieClip {
@@ -21,6 +22,7 @@
 		public static const SWF_STATS:String = "stats";
 		public static const SWF_HELP:String = "help";
 		public static const SWF_HEADER_ADDITION:String = "header_addition";
+		public static const SWF_HEADER_SUBTRACTION:String = "header_subtraction";
 		public static const SWF_BUCKET:String = "bucket";
 		public static const SWF_WATER:String = "water";
 		
@@ -35,6 +37,7 @@
 		public var swfStats:Stats;
 		public var swfHelp:Help;
 		public var swfHeaderAddition:HeaderAddition;
+		public var swfHeaderSubtraction:HeaderSubtraction;
 		public var swfBucket:Bucket;
 		public var swfWater:Water;
 		
@@ -64,7 +67,7 @@
 		//***********//
 		public function LoadMenu()
 		{
-			this.RemoveSWFFiles();
+			this.RemoveAllFromStage();
 			
 			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadMenuComplete });
 			
@@ -92,7 +95,7 @@
 		//***********//
 		public function LoadPlay()
 		{
-			this.RemoveSWFFiles();
+			this.RemoveAllFromStage();
 			
 			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadPlayComplete });
 			
@@ -125,7 +128,7 @@
 		//************//
 		public function LoadStats()
 		{
-			this.RemoveSWFFiles();
+			this.RemoveAllFromStage();
 			
 			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadStatsComplete });
 		
@@ -158,7 +161,7 @@
 		//***********//
 		public function LoadHelp()
 		{
-			this.RemoveSWFFiles();
+			this.RemoveAllFromStage();
 			
 			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadHelpComplete });
 		
@@ -191,7 +194,7 @@
 		//***************//
 		public function LoadAddition()
 		{
-			this.RemoveSWFFiles();
+			this.RemoveAllFromStage();
 			
 			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadAdditionComplete });
 		
@@ -224,6 +227,44 @@
 			this.LoadAddition();
 		}
 		
+		//******************//
+		// LOAD SUBTRACTION //
+		//******************//
+		public function LoadSubtraction()
+		{
+			this.RemoveAllFromStage();
+			
+			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadSubtractionComplete });
+		
+			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
+			loader.append(new SWFLoader(Main.SWF_HEADER_SUBTRACTION + ".swf", { name: Main.SWF_HEADER_SUBTRACTION, container: this }));
+			loader.append(new SWFLoader(Main.SWF_WATER + ".swf", { name: Main.SWF_WATER, container: this }));
+			loader.append(new SWFLoader(Main.SWF_BUCKET + ".swf", { name: Main.SWF_BUCKET, container: this }));
+			loader.load();
+		}
+		
+		private function LoadSubtractionComplete(e:LoaderEvent)
+		{
+			this.swfBackButton = LoaderMax.getContent(Main.SWF_BACK_BUTTON).rawContent as BackButton;
+			this.swfHeaderSubtraction = LoaderMax.getContent(Main.SWF_HEADER_SUBTRACTION).rawContent as HeaderSubtraction;
+			this.swfWater = LoaderMax.getContent(Main.SWF_WATER).rawContent as Water;
+			this.swfBucket = LoaderMax.getContent(Main.SWF_BUCKET).rawContent as Bucket;
+			
+			this.CreateNewGame();
+			
+			this.swfBackButton.Init();
+			this.swfHeaderSubtraction.Init();
+			this.swfWater.Init();
+			this.swfBucket.Init();
+			
+			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadPlayFromMouseEvent);
+		}
+		
+		public function LoadSubtractionFromMouseEvent(e:MouseEvent)
+		{
+			this.LoadSubtraction();
+		}
+		
 		//****************//
 		// GAME FUNCTIONS //
 		//****************//
@@ -235,10 +276,20 @@
 		//******************//
 		// REMOVE SWF FILES //
 		//******************//
-		private function RemoveSWFFiles()
+		private function RemoveAllFromStage()
 		{
+			if (this.game != null)
+				this.game.StopTimer();
+			
 			for (var i = (this.numChildren - 1); i >= 0; i--) 			
 			{ 
+				if (this.getChildAt(i).name == Main.ELEMENT_RAINDROP)
+				{
+					var raindrop:Raindrop = this.getChildAt(i) as Raindrop;
+					
+					raindrop.tween.kill();
+				}
+
  				this.removeChildAt(i); 
  			}
 		}

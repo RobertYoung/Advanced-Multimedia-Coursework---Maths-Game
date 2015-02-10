@@ -42,6 +42,7 @@
 		{
 			this.rainTimer.stop();
 			this.main.swfBucket.StopDrag();
+			this.FadeAllRaindrops();
 		}
 		
 		private function InErrorState():Boolean
@@ -94,23 +95,7 @@
 			
 			main.addChild(raindrop);
 			
-			var raindropTween:TweenMax = new TweenMax(raindrop, duration, { x: point.x, y: 850, onComplete: this.RaindropTweenComplete, onCompleteParams: [raindrop], ease: Circ.easeIn});
-			
-			raindropTween.play();
-		}
-		
-		private function RaindropTweenComplete(raindrop:Raindrop)
-		{
-			this.RemoveRaindrop(raindrop);
-			
-			if (!raindrop.GetCaught())
-				this.main.swfWater.IncreaseWaterLevel();
-		}
-		
-		private function RemoveRaindrop(raindrop:Raindrop)
-		{
-			if (raindrop.parent != null)
-				raindrop.parent.removeChild(raindrop);
+			raindrop.StartTween(duration);
 		}
 		
 		private function RandomRaindropPosition():Point
@@ -145,13 +130,11 @@
 				if (this.updateScoresFunction != null)
 					this.updateScoresFunction(number);
 				
-				raindrop.SetCaught();
-				
-				this.RemoveRaindrop(raindrop);
+				raindrop.RemoveRaindrop();
 			}
 		}
 		
-		private function FadeAllRaindrops()
+		public function FadeAllRaindrops()
 		{
 			for (var i = 0; i < this.main.numChildren; i++)
 			{
@@ -171,6 +154,14 @@
 		public function SetUpdateScoreFunction(setFunction:Function)
 		{
 			this.updateScoresFunction = setFunction;
+		}
+		
+		//*****************//
+		// TIMER FUNCTIONS //
+		//*****************//
+		public function StopTimer()
+		{
+			this.rainTimer.stop();
 		}
 	}
 }

@@ -117,6 +117,7 @@
 				// Incorrect
 				var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", "Looks like you have gone too far");
 				
+				alertview.SetOkButtonFunction(this.main.LoadAdditionFromMouseEvent);
 				this.main.addChild(alertview);
 				this.main.game.ResetAfterError();
 			}else if (this.currentNumber == this.numberToMake)
@@ -155,7 +156,7 @@
 		//****************//
 		public function GameComplete()
 		{
-			var alertview:CompleteAlertview = new CompleteAlertview("You have successfully completed all the addition levels");
+			var alertview:CompleteAlertview = new CompleteAlertview("You have successfully completed all the addition levels", this.main.LoadPlayFromMouseEvent);
 			
 			this.main.addChild(alertview);
 		}

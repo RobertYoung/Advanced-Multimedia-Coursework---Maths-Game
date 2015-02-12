@@ -37,7 +37,9 @@
 			this.game = this.main.game;
 			this.SetRandomNumberToMake();
 			this.game.SetUpdateScoreFunction(this.SetCurrentNumber);
+			this.game.SetWaterLEvelReachedMaxFunction(this.MaxWaterLevelReached);
 			this.SetLevel(1);
+			this.SetMaxWaterLevel();
 			this.game.StartRain();
 		}
 		
@@ -160,6 +162,22 @@
 			
 			this.main.addChild(alertview);
 		}
+		
+		//***********************//
+		// WATER LEVEL FUNCTIONS //
+		//***********************//
+		private function SetMaxWaterLevel()
+		{
+			this.main.swfWater.SetWaterLevel(game.GenerateRandomNumber(755, 755)); // 500 - 700
+		}
+		
+		private function MaxWaterLevelReached()
+		{
+			var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", "The room has filled with too much water. Please try again");
+			
+			this.main.addChild(alertview);
+			this.game.FadeAllRaindrops();
+			this.main.game.ResetAfterError();
+		}
 	}
-	
 }

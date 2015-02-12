@@ -18,6 +18,7 @@
 		
 		// Function variables
 		var updateScoresFunction:Function;
+		public var waterLevelReachedMaxFunction:Function;
 		
 		public function Game(setMain:Main) {
 			this.main = setMain;
@@ -154,6 +155,14 @@
 		public function SetUpdateScoreFunction(setFunction:Function)
 		{
 			this.updateScoresFunction = setFunction;
+		}
+		
+		//***********************************//
+		// WATER LEVEL REACHED MAX FUNCTIONS //
+		//***********************************//
+		public function SetWaterLEvelReachedMaxFunction(setFunction:Function)
+		{
+			this.waterLevelReachedMaxFunction = setFunction;
 		}
 		
 		//*****************//

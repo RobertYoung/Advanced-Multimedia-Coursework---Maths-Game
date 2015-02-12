@@ -16,6 +16,8 @@
 		var main:Main;
 		var duration:Number = 8;
 		var rainTimer:Timer;
+		var raindropMinValue:Number = 1;
+		var raindropMaxValue:Number = 30;
 		
 		// Function variables
 		var updateScoresFunction:Function;
@@ -119,7 +121,7 @@
 		
 		private function RandomRaindropnumber():Number
 		{
-			return this.GenerateRandomNumber(20, 21);
+			return this.GenerateRandomNumber(this.raindropMinValue, this.raindropMaxValue);
 		}
 		
 		private function CheckRaindropHitsBucket(e:Event)
@@ -157,6 +159,12 @@
 			}
 		}
 		
+		public function SetRaindropMinMaxValues(min:Number, max:Number)
+		{
+			this.raindropMinValue = min;
+			this.raindropMaxValue = max;
+		}
+		
 		//*************************//
 		// UPDATE SCORES FUNCTIONS //
 		//*************************//
@@ -192,7 +200,8 @@
 		//*****************//
 		public function StopTimer()
 		{
-			this.rainTimer.stop();
+			if (this.rainTimer != null && this.rainTimer.running)
+				this.rainTimer.stop();
 		}
 	}
 }

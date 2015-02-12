@@ -22,8 +22,6 @@
 		
 		public function Init()
 		{
-			trace("SWF PLAY LOADED");
-			
 			this.main = this.stage.getChildAt(0) as Main;
 			
 			this.addition_mc.mouseChildren = false;
@@ -34,6 +32,7 @@
 			
 			this.addition_mc.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadAdditionFromMouseEvent);
 			this.subtraction_mc.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadSubtractionFromMouseEvent);
+			this.multiplication_mc.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadMultiplicationFromMouseEvent);
 		}
 	}
 	

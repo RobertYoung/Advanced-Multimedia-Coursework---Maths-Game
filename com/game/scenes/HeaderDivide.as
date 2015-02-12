@@ -5,7 +5,8 @@
 	import flash.text.TextField;
 	import com.game.elements.IncorrectAlertview;
 	
-	public class HeaderMultiplication extends MovieClip {
+	
+	public class HeaderDivide extends MovieClip {
 		
 		// Game variables
 		private var main:Main;
@@ -23,7 +24,7 @@
 		private var numberToMake:Number;
 		private var levelNumber:Number;
 		
-		public function HeaderMultiplication() {
+		public function HeaderDivide() {
 			/* DO NOT PUT ANYTHING IN HERE */
 		}
 		
@@ -32,12 +33,22 @@
 			this.main = this.stage.getChildAt(0) as Main;
 			this.game = this.main.game;
 			
-			this.SetRandomNumberToMake();
+			this.SetupDivision();
 			this.game.SetMaxWaterLevel(400);
 			this.game.SetUpdateScoreFunction(this.RaindropCaught);
 			this.game.SetRaindropMinMaxValues(10, 11);
 			this.SetLevel(1);
 			this.game.StartRain();
+		}
+		
+		//*****************//
+		// SETUP FUNCTIONS //
+		//*****************//
+		private function SetupDivision()
+		{
+			this.SetNumber1(0);
+			this.SetRandomNumberToMake();
+			this.SetRandomNumber2();
 		}
 		
 		//**************************//
@@ -56,7 +67,7 @@
 		
 		private function SetRandomNumberToMake()
 		{
-			this.SetNumberToMake(this.game.GenerateRandomNumber(100, 100));
+			this.SetNumberToMake(this.game.GenerateRandomNumber(1, 1));
 		}
 		
 		//********************//
@@ -87,6 +98,11 @@
 			return parseInt(this.number2_txt.text);
 		}
 		
+		private function SetRandomNumber2()
+		{
+			this.SetNumber2(this.game.GenerateRandomNumber(10, 10));
+		}
+		
 		//*****************//
 		// LEVEL FUNCTIONS //
 		//*****************//
@@ -107,35 +123,27 @@
 		//*****************//
 		private function RaindropCaught(number:Number)
 		{
-			if (this.number1_txt.text == "")
+			this.SetNumber1(number);
+			
+			if ((this.number1 / this.number2) == this.GetNumberToMake())
 			{
-				this.SetNumber1(number);
-			}else if (this.number2_txt.text == "")
-			{
-				this.SetNumber2(number);
-				
-				if ((this.number1 * this.number2) == this.GetNumberToMake())
+				// Correct
+				if (this.levelNumber == 5)
 				{
-					// Correct
-					if (this.levelNumber == 5)
-					{
-						this.game.SetGameComplete();
-						this.game.GameComplete("multiplication", this.main.LoadPlayFromMouseEvent);
-					}else{
-						this.IncrementLevel();
-						this.SetNumber1(0);
-						this.SetNumber2(0);
-						this.SetRandomNumberToMake();
-						this.main.swfWater.ResetWaterLevel();
-						this.main.swfWater.DecreaseWaterLevel();
-					}
+					this.game.SetGameComplete();
+					this.game.GameComplete("divide", this.main.LoadPlayFromMouseEvent);
 				}else{
-					// Incorrect
-					var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", this.number1 + " x " + this.number2 + " does not equal " + this.GetNumberToMake(), this.main.LoadMultiplicationFromMouseEvent);
-
-					this.main.addChild(alertview);
-					this.main.game.ResetAfterError();
+					this.IncrementLevel();
+					this.SetupDivision();
+					this.main.swfWater.ResetWaterLevel();
+					this.main.swfWater.DecreaseWaterLevel();
 				}
+			}else{
+				// Incorrect
+				var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", this.number1 + " % " + this.number2 + " does not equal " + this.GetNumberToMake(), this.main.LoadDivideFromMouseEvent);
+
+				this.main.addChild(alertview);
+				this.main.game.ResetAfterError();
 			}
 		}
 	}

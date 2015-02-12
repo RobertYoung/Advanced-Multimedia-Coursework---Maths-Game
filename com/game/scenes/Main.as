@@ -24,6 +24,7 @@
 		public static const SWF_HEADER_ADDITION:String = "header_addition";
 		public static const SWF_HEADER_SUBTRACTION:String = "header_subtraction";
 		public static const SWF_HEADER_MULTIPLICATION:String = "header_multiplication";
+		public static const SWF_HEADER_DIVIDE:String = "header_divide";
 		public static const SWF_BUCKET:String = "bucket";
 		public static const SWF_WATER:String = "water";
 		
@@ -40,6 +41,7 @@
 		public var swfHeaderAddition:HeaderAddition;
 		public var swfHeaderSubtraction:HeaderSubtraction;
 		public var swfHeaderMultiplication:HeaderMultiplication;
+		public var swfHeaderDivide:HeaderDivide;
 		public var swfBucket:Bucket;
 		public var swfWater:Water;
 		
@@ -303,6 +305,44 @@
 		public function LoadMultiplicationFromMouseEvent(e:MouseEvent)
 		{
 			this.LoadMultiplication();
+		}
+		
+		//*********************//
+		// LOAD MULTIPLICATION //
+		//*********************//
+		public function LoadDivide()
+		{
+			this.RemoveAllFromStage();
+			
+			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadDivideComplete });
+		
+			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
+			loader.append(new SWFLoader(Main.SWF_HEADER_DIVIDE + ".swf", { name: Main.SWF_HEADER_DIVIDE, container: this }));
+			loader.append(new SWFLoader(Main.SWF_WATER + ".swf", { name: Main.SWF_WATER, container: this }));
+			loader.append(new SWFLoader(Main.SWF_BUCKET + ".swf", { name: Main.SWF_BUCKET, container: this }));
+			loader.load();
+		}
+		
+		private function LoadDivideComplete(e:LoaderEvent)
+		{
+			this.swfBackButton = LoaderMax.getContent(Main.SWF_BACK_BUTTON).rawContent as BackButton;
+			this.swfHeaderDivide = LoaderMax.getContent(Main.SWF_HEADER_DIVIDE).rawContent as HeaderDivide;
+			this.swfWater = LoaderMax.getContent(Main.SWF_WATER).rawContent as Water;
+			this.swfBucket = LoaderMax.getContent(Main.SWF_BUCKET).rawContent as Bucket;
+			
+			this.CreateNewGame();
+			
+			this.swfBackButton.Init();
+			this.swfHeaderDivide.Init();
+			this.swfWater.Init();
+			this.swfBucket.Init();
+			
+			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadPlayFromMouseEvent);
+		}
+		
+		public function LoadDivideFromMouseEvent(e:MouseEvent)
+		{
+			this.LoadDivide();
 		}
 		
 		//****************//

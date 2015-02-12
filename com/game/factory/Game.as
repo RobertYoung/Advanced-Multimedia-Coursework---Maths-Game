@@ -1,5 +1,5 @@
 ﻿package com.game.factory {
-	import com.game.elements.Raindrop;
+	
 	import com.game.scenes.Main;
 	import flash.geom.Point;
 	import com.greensock.TweenMax;
@@ -8,6 +8,7 @@
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
 	import flash.events.Event;
+	import com.game.elements.*;
 	
 	public class Game {
 
@@ -70,6 +71,13 @@
 			this.rainTimer.stop();
 			this.main.swfBucket.StopDrag();
 			this.FadeAllRaindrops();
+		}
+
+		public function GameComplete(level:String, okFunction:Function)
+		{
+			var alertview:CompleteAlertview = new CompleteAlertview("You have successfully completed all the " + level + " levels", okFunction);
+			
+			this.main.addChild(alertview);
 		}
 		
 		//****************//
@@ -157,12 +165,26 @@
 			this.updateScoresFunction = setFunction;
 		}
 		
-		//***********************************//
-		// WATER LEVEL REACHED MAX FUNCTIONS //
-		//***********************************//
-		public function SetWaterLEvelReachedMaxFunction(setFunction:Function)
+		//***********************//
+		// WATER LEVEL FUNCTIONS //
+		//***********************//
+		public function SetWaterLevelReachedMaxFunction(setFunction:Function)
 		{
 			this.waterLevelReachedMaxFunction = setFunction;
+		}
+
+		public function SetMaxWaterLevel(max:Number)
+		{
+			this.main.swfWater.SetWaterLevel(max);
+		}
+		
+		public function MaxWaterLevelReached()
+		{
+			var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", "The room has filled with too much water", this.waterLevelReachedMaxFunction);
+			
+			this.main.addChild(alertview);
+			this.FadeAllRaindrops();
+			this.main.game.ResetAfterError();
 		}
 		
 		//*****************//

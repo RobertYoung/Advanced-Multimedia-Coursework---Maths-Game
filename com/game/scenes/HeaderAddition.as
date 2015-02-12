@@ -31,15 +31,12 @@
 		
 		public function Init()
 		{
-			trace("HEADER ADDITION SWF LOADED");
-			
 			this.main = this.stage.getChildAt(0) as Main;
 			this.game = this.main.game;
 			this.SetRandomNumberToMake();
 			this.game.SetUpdateScoreFunction(this.SetCurrentNumber);
-			this.game.SetWaterLEvelReachedMaxFunction(this.MaxWaterLevelReached);
 			this.SetLevel(1);
-			this.SetMaxWaterLevel(500);
+			this.game.SetMaxWaterLevel(500);
 			this.game.StartRain();
 		}
 		
@@ -127,8 +124,8 @@
 				// Correct
 				if (this.levelNumber == 5)
 				{
-					this.main.game.SetGameComplete();
-					this.GameComplete();
+					this.game.SetGameComplete();
+					this.game.GameComplete("addition", this.main.LoadPlayFromMouseEvent);
 				}else{
 					this.IncrementLevel();
 					this.SetNumberToMake(0);
@@ -153,33 +150,6 @@
 		{
 			this.levelNumber++;
 			this.SetLevel(this.levelNumber);
-		}
-		
-		//****************//
-		// GAME FUNCTIONS //
-		//****************//
-		public function GameComplete()
-		{
-			var alertview:CompleteAlertview = new CompleteAlertview("You have successfully completed all the addition levels", this.main.LoadPlayFromMouseEvent);
-			
-			this.main.addChild(alertview);
-		}
-		
-		//***********************//
-		// WATER LEVEL FUNCTIONS //
-		//***********************//
-		private function SetMaxWaterLevel(max:Number)
-		{
-			this.main.swfWater.SetWaterLevel(max); // 500 - 700
-		}
-		
-		private function MaxWaterLevelReached()
-		{
-			var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", "The room has filled with too much water", this.main.LoadAdditionFromMouseEvent);
-			
-			this.main.addChild(alertview);
-			this.game.FadeAllRaindrops();
-			this.main.game.ResetAfterError();
 		}
 	}
 }

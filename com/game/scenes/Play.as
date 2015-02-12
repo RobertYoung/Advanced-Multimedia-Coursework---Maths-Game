@@ -34,6 +34,7 @@
 			this.subtraction_mc.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadSubtractionFromMouseEvent);
 			this.multiplication_mc.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadMultiplicationFromMouseEvent);
 			this.division_mc.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadDivideFromMouseEvent);
+			this.money_mc.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadMoneyFromMouseEvent);
 		}
 	}
 	

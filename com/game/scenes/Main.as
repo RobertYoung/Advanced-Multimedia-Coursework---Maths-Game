@@ -25,6 +25,7 @@
 		public static const SWF_HEADER_SUBTRACTION:String = "header_subtraction";
 		public static const SWF_HEADER_MULTIPLICATION:String = "header_multiplication";
 		public static const SWF_HEADER_DIVIDE:String = "header_divide";
+		public static const SWF_MONEY:String = "money";
 		public static const SWF_BUCKET:String = "bucket";
 		public static const SWF_WATER:String = "water";
 		
@@ -42,6 +43,7 @@
 		public var swfHeaderSubtraction:HeaderSubtraction;
 		public var swfHeaderMultiplication:HeaderMultiplication;
 		public var swfHeaderDivide:HeaderDivide;
+		public var swfMoney:Money;
 		public var swfBucket:Bucket;
 		public var swfWater:Water;
 		
@@ -307,9 +309,9 @@
 			this.LoadMultiplication();
 		}
 		
-		//*********************//
-		// LOAD MULTIPLICATION //
-		//*********************//
+		//*************//
+		// LOAD DIVIDE //
+		//*************//
 		public function LoadDivide()
 		{
 			this.RemoveAllFromStage();
@@ -343,6 +345,38 @@
 		public function LoadDivideFromMouseEvent(e:MouseEvent)
 		{
 			this.LoadDivide();
+		}
+		
+		//*********************//
+		// LOAD MONEY //
+		//*********************//
+		public function LoadMoney()
+		{
+			this.RemoveAllFromStage();
+			
+			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadMoneyComplete });
+		
+			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
+			loader.append(new SWFLoader(Main.SWF_MONEY + ".swf", { name: Main.SWF_MONEY, container: this }));
+			loader.load();
+		}
+		
+		private function LoadMoneyComplete(e:LoaderEvent)
+		{
+			this.swfBackButton = LoaderMax.getContent(Main.SWF_BACK_BUTTON).rawContent as BackButton;
+			this.swfMoney = LoaderMax.getContent(Main.SWF_MONEY).rawContent as Money;
+			
+			this.CreateNewGame();
+			
+			this.swfBackButton.Init();
+			this.swfMoney.Init();
+			
+			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadPlayFromMouseEvent);
+		}
+		
+		public function LoadMoneyFromMouseEvent(e:MouseEvent)
+		{
+			this.LoadMoney();
 		}
 		
 		//****************//

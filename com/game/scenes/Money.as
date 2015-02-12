@@ -3,6 +3,8 @@
 	import flash.display.MovieClip;
 	import com.game.factory.Game;
 	import com.game.elements.Can;
+	import com.game.elements.Bottle;
+	import com.game.elements.Box;
 	
 	public class Money extends MovieClip {
 		
@@ -11,7 +13,9 @@
 		private var game:Game;
 		
 		// Products
-		public var can:Can;
+		private var can:Can;
+		private var bottle:Bottle;
+		private var box:Box;
 		
 		public function Money() {
 			/* DO NOT PUT ANYTHING IN HERE */
@@ -23,6 +27,8 @@
 			this.game = this.main.game;
 			
 			this.CreateCan();
+			this.CreateBottle();
+			this.CreateBox();
 		}
 		
 		//*******************//
@@ -37,6 +43,28 @@
 			this.SetPrice(this.can, 210);
 			
 			this.main.addChild(this.can);
+		}
+		
+		private function CreateBottle()
+		{
+			this.bottle = new Bottle();
+			
+			this.bottle.x = 600;
+			this.bottle.y = 400;
+			this.SetPrice(this.bottle, 99);
+			
+			this.main.addChild(this.bottle);
+		}
+		
+		private function CreateBox()
+		{
+			this.box = new Box();
+			
+			this.box.x = 400;
+			this.box.y = 600;
+			this.SetPrice(this.box, 481);
+			
+			this.main.addChild(this.box);
 		}
 		
 		private function SetPrice(product:MovieClip, price:Number)

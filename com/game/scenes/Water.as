@@ -40,7 +40,7 @@
 			// Water gone past max
 			if (this.waterFill_mc.y < this.waterLevel_mc.y)
 			{
-				this.game.waterLevelReachedMaxFunction();
+				this.game.MaxWaterLevelReached();
 			}
 		}
 		

@@ -35,8 +35,9 @@
 			this.game = this.main.game;
 			this.SetRandomNumberToMake();
 			this.game.SetUpdateScoreFunction(this.SetCurrentNumber);
+			this.game.SetWaterLevelReachedMaxFunction(this.main.LoadAdditionFromMouseEvent);
 			this.SetLevel(1);
-			this.game.SetMaxWaterLevel(500);
+			this.game.SetMaxWaterLevel(770);
 			this.game.StartRain();
 		}
 		

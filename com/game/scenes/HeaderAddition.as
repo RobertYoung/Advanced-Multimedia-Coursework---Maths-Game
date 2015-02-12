@@ -39,7 +39,7 @@
 			this.game.SetUpdateScoreFunction(this.SetCurrentNumber);
 			this.game.SetWaterLEvelReachedMaxFunction(this.MaxWaterLevelReached);
 			this.SetLevel(1);
-			this.SetMaxWaterLevel();
+			this.SetMaxWaterLevel(500);
 			this.game.StartRain();
 		}
 		
@@ -117,7 +117,7 @@
 			if (this.currentNumber > this.numberToMake)
 			{
 				// Incorrect
-				var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", "Looks like you have gone too far");
+				var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", "Looks like you have gone too far", this.main.LoadAdditionFromMouseEvent);
 				
 				alertview.SetOkButtonFunction(this.main.LoadAdditionFromMouseEvent);
 				this.main.addChild(alertview);
@@ -125,7 +125,7 @@
 			}else if (this.currentNumber == this.numberToMake)
 			{
 				// Correct
-				if (this.levelNumber == 2)
+				if (this.levelNumber == 5)
 				{
 					this.main.game.SetGameComplete();
 					this.GameComplete();
@@ -134,6 +134,8 @@
 					this.SetNumberToMake(0);
 					this.SetRandomNumberToMake();
 					this.SetCurrentNumber(0, false);
+					this.main.swfWater.ResetWaterLevel();
+					this.main.swfWater.DecreaseWaterLevel();
 				}
 			}
 		}
@@ -166,14 +168,14 @@
 		//***********************//
 		// WATER LEVEL FUNCTIONS //
 		//***********************//
-		private function SetMaxWaterLevel()
+		private function SetMaxWaterLevel(max:Number)
 		{
-			this.main.swfWater.SetWaterLevel(game.GenerateRandomNumber(755, 755)); // 500 - 700
+			this.main.swfWater.SetWaterLevel(max); // 500 - 700
 		}
 		
 		private function MaxWaterLevelReached()
 		{
-			var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", "The room has filled with too much water. Please try again");
+			var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", "The room has filled with too much water", this.main.LoadAdditionFromMouseEvent);
 			
 			this.main.addChild(alertview);
 			this.game.FadeAllRaindrops();

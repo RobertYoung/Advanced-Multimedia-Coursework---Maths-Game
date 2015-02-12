@@ -78,9 +78,10 @@
 		
 		private function TweenComplete()
 		{
-			trace("complete");
 			this.RemoveRaindrop();
-			this.main.swfWater.IncreaseWaterLevel();
+			
+			if (!this.main.game.InErrorState())
+				this.main.swfWater.IncreaseWaterLevel();
 		}
 	}
 }

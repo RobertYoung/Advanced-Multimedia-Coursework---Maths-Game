@@ -46,7 +46,7 @@
 			this.FadeAllRaindrops();
 		}
 		
-		private function InErrorState():Boolean
+		public function InErrorState():Boolean
 		{
 			if (this.main.getChildByName(Main.ELEMENT_INCORRECT_ALERTVIEW) == null)
 				return false;
@@ -111,7 +111,7 @@
 		
 		private function RandomRaindropnumber():Number
 		{
-			return this.GenerateRandomNumber(20, 20);
+			return this.GenerateRandomNumber(20, 21);
 		}
 		
 		private function CheckRaindropHitsBucket(e:Event)

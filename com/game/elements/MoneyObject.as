@@ -1,0 +1,182 @@
+﻿package com.game.elements {
+
+	import flash.display.MovieClip;
+	import flash.events.Event;
+	import flash.events.MouseEvent;
+	import com.game.scenes.Money;
+	import com.game.scenes.Main;
+	import flash.utils.*;
+	
+	public class MoneyObject extends MovieClip {
+
+		// Value variables
+		private var value:Number;
+		
+		// Position variables
+		private var nX:Number;
+		private var nY:Number;
+		
+		// Game variables
+		private var main:Main;
+		
+		public function MoneyObject() {
+			this.addEventListener(Event.ADDED_TO_STAGE, this.Init);
+			this.addEventListener(MouseEvent.MOUSE_DOWN, this.StartDragFromMoneyHolder);
+		}
+		
+		//***************//
+		// INITILIZATION //
+		//***************//
+		private function Init(e:Event = null)
+		{
+			this.main = this.stage.getChildAt(0) as Main;
+			this.mouseChildren = false;
+			this.nX = this.x;
+			this.nY = this.y;
+		}
+		
+		//*****************//
+		// EVENT LISTENERS //
+		//*****************//
+		private function AddStartDragFromMoneyHolder()
+		{
+			this.addEventListener(MouseEvent.MOUSE_DOWN, this.StartDragFromMoneyHolder);
+		}
+		
+		private function RemoveStartDragFromMoneyHolder()
+		{
+			this.removeEventListener(MouseEvent.MOUSE_DOWN, this.StartDragFromMoneyHolder);
+		}
+		
+		private function AddStopDragFromMoneyHolder()
+		{
+			this.addEventListener(MouseEvent.MOUSE_UP, this.StopDragFromMoneyHolder);
+			this.addEventListener(MouseEvent.RELEASE_OUTSIDE, this.StopDragFromMoneyHolder);
+		}
+		
+		private function RemoveStopDragFromMoneyHolder()
+		{
+			this.removeEventListener(MouseEvent.MOUSE_UP, this.StopDragFromMoneyHolder);
+			this.removeEventListener(MouseEvent.RELEASE_OUTSIDE, this.StopDragFromMoneyHolder);
+		}
+		
+		private function AddStartDragFromCounter()
+		{
+			this.addEventListener(MouseEvent.MOUSE_DOWN, this.StartDragFromCounter);
+		}
+		
+		private function RemoveStartDragFromCounter()
+		{
+			this.removeEventListener(MouseEvent.MOUSE_DOWN, this.StartDragFromCounter);
+		}
+		
+		private function AddStopDragFromCounter()
+		{
+			this.addEventListener(MouseEvent.MOUSE_UP, this.StopDragFromCounter);
+			this.addEventListener(MouseEvent.RELEASE_OUTSIDE, this.StopDragFromCounter);
+		}
+		
+		private function RemoveStopDragFromCounter()
+		{
+			this.removeEventListener(MouseEvent.MOUSE_UP, this.StopDragFromCounter);
+			this.removeEventListener(MouseEvent.RELEASE_OUTSIDE, this.StopDragFromCounter);
+		}
+		
+		//*****************//
+		// VALUE FUNCTIONS //
+		//*****************//
+		public function SetValue(setValue:Number)
+		{
+			this.value = setValue;
+		}
+		
+		public function GetValue():Number
+		{
+			return this.value;
+		}
+		
+		//****************//
+		// DRAG FUNCTIONS //
+		//****************//
+		private function StartDragFromMoneyHolder(e:MouseEvent = null)
+		{
+			this.startDrag();
+			this.RemoveStartDragFromMoneyHolder();
+			this.AddStopDragFromMoneyHolder();
+		}
+		
+		private function StopDragFromMoneyHolder(e:MouseEvent = null)
+		{
+			this.RemoveStopDragFromMoneyHolder();
+			this.stopDrag();
+			
+			if (this.dropTarget == null)
+			{
+				this.AnimateBackToMoneyHolder();
+				this.AddStartDragFromMoneyHolder();
+			}else if (this.dropTarget.parent.name == Money.ELEMENT_COUNTER){
+				this.CreateNewMoney();
+				this.AddStartDragFromCounter();
+			}else{
+				this.AnimateBackToMoneyHolder();
+				this.AddStartDragFromMoneyHolder();
+			}
+		}
+		
+		private function StartDragFromCounter(e:MouseEvent = null)
+		{
+			this.startDrag();
+			this.RemoveStartDragFromCounter();
+			this.AddStopDragFromCounter();
+		}
+		
+		private function StopDragFromCounter(e:MouseEvent = null)
+		{
+			this.stopDrag();
+			this.RemoveStopDragFromCounter();
+			
+			if (this.dropTarget == null)
+			{
+				this.DeleteMoney();
+			}else{
+				this.AddStartDragFromCounter();
+			}
+		}
+		
+		//*********************//
+		// ANIMATION FUNCTIONS //
+		//*********************//
+		private function AnimateBackToMoneyHolder()
+		{
+			this.x = this.nX;
+			this.y = this.nY;
+		}
+		
+		//***************************//
+		// CREATe & DELETE FUNCTIONS //
+		//***************************//
+		private function CreateNewMoney()
+		{
+			var MoneyClass:Class = GetClass();
+			var newMoney = new MoneyClass();
+			
+			newMoney.x = this.nX;
+			newMoney.y = this.nY;
+			newMoney.name = this.name;
+
+			this.main.addChild(newMoney);
+		}
+		
+		private function DeleteMoney()
+		{
+			this.parent.removeChild(this);
+		}
+		
+		//*******************//
+ 		// CLASS INFORMATION //
+		//*******************//
+		function GetClass():Class { 
+			return getDefinitionByName(getQualifiedClassName(this)) as Class;
+ 		} 
+	}
+}

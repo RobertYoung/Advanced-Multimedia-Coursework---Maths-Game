@@ -7,6 +7,8 @@
 	import com.game.elements.Box;
 	
 	public class Money extends MovieClip {
+
+		public static const ELEMENT_COUNTER:String = "counter_mc";
 		
 		// Game variables
 		private var main:Main;
@@ -16,6 +18,17 @@
 		private var can:Can;
 		private var bottle:Bottle;
 		private var box:Box;
+		
+		// Element on SWF file
+		public var counter_mc:MovieClip;
+		public var onePence_mc:MovieClip;
+		public var twoPence_mc:MovieClip;
+		public var fivePence_mc:MovieClip;
+		public var tenPence_mc:MovieClip;
+		public var twentyPence_mc:MovieClip;
+		public var fiftyPence_mc:MovieClip;
+		public var onePound_mc:MovieClip;
+		public var twoPound_mc:MovieClip;
 		
 		public function Money() {
 			/* DO NOT PUT ANYTHING IN HERE */
@@ -38,7 +51,7 @@
 		{
 			this.can = new Can();
 			
-			this.can.x = 400;
+			this.can.x = 200;
 			this.can.y = 400;
 			this.SetPrice(this.can, 210);
 			
@@ -49,7 +62,7 @@
 		{
 			this.bottle = new Bottle();
 			
-			this.bottle.x = 600;
+			this.bottle.x = 300;
 			this.bottle.y = 400;
 			this.SetPrice(this.bottle, 99);
 			
@@ -60,7 +73,7 @@
 		{
 			this.box = new Box();
 			
-			this.box.x = 400;
+			this.box.x = 200;
 			this.box.y = 600;
 			this.SetPrice(this.box, 481);
 			

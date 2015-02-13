@@ -171,6 +171,9 @@
 			newMoney.x = this.nX;
 			newMoney.y = this.nY;
 			newMoney.name = this.name;
+			newMoney.scaleX = this.scaleX;
+			newMoney.scaleY = this.scaleY;
+			newMoney.scaleZ = this.scaleZ;
 
 			this.main.addChild(newMoney);
 		}

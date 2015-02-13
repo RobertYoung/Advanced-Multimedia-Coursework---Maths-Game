@@ -7,10 +7,15 @@
 	import com.game.elements.Box;
 	import flash.text.TextField;
 	import flash.events.MouseEvent;
+	import com.game.elements.IncorrectAlertview;
+	import com.game.elements.CompleteAlertview;
 	
 	public class Money extends MovieClip {
 
 		public static const ELEMENT_COUNTER:String = "counter_mc";
+		public static const ELEMENT_CAN:String = "can_mc";
+		public static const ELEMENT_BOTTLE:String = "bottle_mc";
+		public static const ELEMENT_BOX:String = "box_mc";
 		
 		// Game variables
 		private var main:Main;
@@ -63,9 +68,11 @@
 			
 			this.can.x = 790;
 			this.can.y = 497;
+			this.can.name = Money.ELEMENT_CAN;
 			this.SetPrice(this.can);
 			
 			this.main.addChild(this.can);
+			trace("CAN");
 		}
 		
 		private function CreateBottle()
@@ -74,9 +81,11 @@
 			
 			this.bottle.x = 956;
 			this.bottle.y = 530;
+			this.bottle.name = Money.ELEMENT_BOTTLE;
 			this.SetPrice(this.bottle);
 			
 			this.main.addChild(this.bottle);
+			trace("BOTTLE");
 		}
 		
 		private function CreateBox()
@@ -85,14 +94,16 @@
 			
 			this.box.x = 780;
 			this.box.y = 655;
+			this.box.name = Money.ELEMENT_BOX
 			this.SetPrice(this.box);
 			
 			this.main.addChild(this.box);
+			trace("BOX");
 		}
 		
 		private function SetPrice(product:MovieClip)
 		{
-			var price:Number = this.game.GenerateRandomNumber(50, 500);
+			var price:Number = this.game.GenerateRandomNumber(50, 50);
 			
 			product["price_txt"].text = this.PenceToPounds(price);
 			
@@ -122,21 +133,53 @@
 				break;
 			}
 			
+			var productsCreated:Array = new Array();
+			
 			for (var i = 1; i <= numberOfProducts; i++)
 			{
-				var randomNum:Number = this.game.GenerateRandomNumber(1, 3);
+				var randomNum:Number;
+				var randomNumFound:Boolean = false;
+				
+				while (!randomNumFound)
+				{
+					randomNum = this.game.GenerateRandomNumber(1, 3);
+					
+					if (productsCreated.indexOf(randomNum) == -1)
+						randomNumFound = true;
+				}				
 
 				switch (randomNum)
 				{
 					case 1:
 						this.CreateCan();
+						productsCreated.push(1);
 					break;
 					case 2:
 						this.CreateBottle();
+						productsCreated.push(2);
 					break;
 					case 3:
 						this.CreateBox();
+						productsCreated.push(3);
 					break;
+				}
+			}
+			
+			trace("Number to make: " + this.numberToMake);
+		}
+		
+		private function RemoveProducts()
+		{			
+			for (var i = (this.main.numChildren - 1); i >= 0; i--)
+			{
+				trace(this.main.getChildAt(i).name);
+				
+				if (this.main.getChildAt(i).name == Money.ELEMENT_CAN ||
+					this.main.getChildAt(i).name == Money.ELEMENT_BOTTLE ||
+					this.main.getChildAt(i).name == Money.ELEMENT_BOX)
+				{
+					trace("REMOVED: " + this.main.getChildAt(i).name);
+					this.main.removeChildAt(i);
 				}
 			}
 		}
@@ -146,11 +189,15 @@
 		//*****************//
 		public function PenceToPounds(pence:Number):String
 		{
+			trace(pence);
 			var pounds:int = pence / 100;
 			pence = pence % 100;
 			
 			if (pounds == 0)
 				return pence + "p";
+
+			if (pence < 10)
+				return "£" + pounds + ".0" + pence;
 			
 			return "£" + pounds + "." + pence;
 		}
@@ -177,10 +224,21 @@
 		{
 			if (this.amountOnCounter == this.numberToMake)
 			{
-				trace("Win!");
-				this.IncrementLevel();
+				if (this.levelNumber == 5)
+				{
+					var correctAlertview:CompleteAlertview = new CompleteAlertview("You have bought all your items successfully!", this.main.LoadPlayFromMouseEvent);
+					
+					this.main.addChild(correctAlertview);
+				}else{
+					this.IncrementLevel();
+					this.RemoveProducts();
+					this.ResetNumberToMake();
+					this.CreateProducts();
+				}
 			}else{
-				trace("Lose!");
+				var incorrectAlertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", "The amount of change on the counter is incorrect", this.main.RemoveAlertviews);
+				
+				this.main.addChild(incorrectAlertview);
 			}
 		}
 		
@@ -204,7 +262,11 @@
 		private function IncreaseNumberToMake(number:Number)
 		{
 			this.numberToMake += number;
-			trace(this.numberToMake);
+		}
+		
+		private function ResetNumberToMake()
+		{
+			this.numberToMake = 0;
 		}
 	}	
 }

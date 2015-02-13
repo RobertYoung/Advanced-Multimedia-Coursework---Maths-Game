@@ -7,6 +7,7 @@
 	import flash.events.MouseEvent;
 	import com.game.factory.Game;
 	import com.game.elements.Raindrop;
+	import flash.events.Event;
 	
 	
 	public class Main extends MovieClip {
@@ -347,9 +348,9 @@
 			this.LoadDivide();
 		}
 		
-		//*********************//
+		//************//
 		// LOAD MONEY //
-		//*********************//
+		//************//
 		public function LoadMoney()
 		{
 			this.RemoveAllFromStage();
@@ -406,6 +407,21 @@
 
  				this.removeChildAt(i); 
  			}
+		}
+		
+		public function RemoveAlertviews(e:Event = null)
+		{
+			if (this.game.InErrorState())
+			{
+				for (var i = 0; i < this.numChildren; i++)
+				{
+					if (this.getChildAt(i).name == Main.ELEMENT_INCORRECT_ALERTVIEW ||
+						this.getChildAt(i).name == Main.ELEMENT_COMPLETE_ALERTVIEW)
+					{
+						this.removeChildAt(i);
+					}
+				}
+			}
 		}
 	}
 	

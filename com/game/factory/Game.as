@@ -16,8 +16,9 @@
 		var main:Main;
 		var duration:Number = 8;
 		var rainTimer:Timer;
-		var raindropMinValue:Number = 1;
-		var raindropMaxValue:Number = 30;
+		var raindropMinValue:Number = 10;
+		var raindropMaxValue:Number = 10;
+		var scoreTimer:Timer;
 		
 		// Function variables
 		var updateScoresFunction:Function;
@@ -37,6 +38,7 @@
 			
 			rainTimer.addEventListener(TimerEvent.TIMER, this.CreateRaindrop);
 			rainTimer.start();
+			this.StartScoreTimer();
 		}
 		
 		//**********************//
@@ -114,7 +116,7 @@
 			var point:Point = new Point();
 			
 			point.x = this.GenerateRandomNumber(50, 984);
-			point.y = this.GenerateRandomNumber(-100, -400);
+			point.y = this.GenerateRandomNumber(-30, -400);
 			
 			return point;
 		}
@@ -202,6 +204,23 @@
 		{
 			if (this.rainTimer != null && this.rainTimer.running)
 				this.rainTimer.stop();
+			
+			if (this.scoreTimer != null && this.scoreTimer.running)
+				this.scoreTimer.stop();
+		}
+		
+		//*****************//
+		// SCORE FUNCTIONS //
+		//*****************//
+		public function StartScoreTimer()
+		{
+			this.scoreTimer = new Timer(1000);
+			this.scoreTimer.start();
+		}
+		
+		public function GetScoreTimer():int
+		{
+			return this.scoreTimer.currentCount;
 		}
 	}
 }

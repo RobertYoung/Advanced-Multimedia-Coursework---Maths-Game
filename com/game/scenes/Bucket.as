@@ -16,8 +16,6 @@
 		
 		public function Init()
 		{
-			trace("BUCKET SWF LOADED");
-			
 			this.bucket_mc.addEventListener(MouseEvent.MOUSE_DOWN, StartDrag);
 			this.bucket_mc.addEventListener(MouseEvent.MOUSE_UP, StopDrag);
 			this.bucket_mc.addEventListener(MouseEvent.RELEASE_OUTSIDE, StopDrag);

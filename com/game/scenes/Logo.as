@@ -12,7 +12,7 @@
 		
 		public function Init()
 		{
-			trace("SWF LOGO LOADED");
+			
 		}
 	}
 	

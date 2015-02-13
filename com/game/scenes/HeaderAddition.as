@@ -7,7 +7,7 @@
 	import flash.events.TimerEvent;
 	import com.game.elements.IncorrectAlertview;
 	import com.game.elements.CompleteAlertview;
-	
+	import com.game.factory.MathsSharedObject;
 	
 	public class HeaderAddition extends MovieClip {
 		
@@ -37,7 +37,7 @@
 			this.game.SetUpdateScoreFunction(this.SetCurrentNumber);
 			this.game.SetWaterLevelReachedMaxFunction(this.main.LoadAdditionFromMouseEvent);
 			this.SetLevel(1);
-			this.game.SetMaxWaterLevel(770);
+			this.game.SetMaxWaterLevel(500);
 			this.game.StartRain();
 		}
 		
@@ -122,6 +122,8 @@
 				this.main.game.ResetAfterError();
 			}else if (this.currentNumber == this.numberToMake)
 			{
+				this.SaveScore();
+				
 				// Correct
 				if (this.levelNumber == 5)
 				{
@@ -136,6 +138,13 @@
 					this.main.swfWater.DecreaseWaterLevel();
 				}
 			}
+		}
+		
+		private function SaveScore()
+		{
+			MathsSharedObject.getInstance().SetAdditionLevelData(this.levelNumber, this.game.GetScoreTimer());
+			this.game.StartScoreTimer();
+			trace(MathsSharedObject.getInstance().GetAdditionLevelData(this.levelNumber));
 		}
 		
 		//*****************//

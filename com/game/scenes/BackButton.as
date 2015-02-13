@@ -15,8 +15,6 @@
 		
 		public function Init()
 		{
-			trace("BACK BUTTON SWF LOADED");
-			
 			backButton_mc.mouseChildren = false;
 		}
 		

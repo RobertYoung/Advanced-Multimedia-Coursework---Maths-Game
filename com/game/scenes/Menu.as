@@ -23,8 +23,6 @@
 		
 		public function Init()
 		{
-			trace("SWF MENU LOADED");
-			
 			main = this.stage.getChildAt(0) as Main;
 			
 			this.play_mc.mouseChildren = false;

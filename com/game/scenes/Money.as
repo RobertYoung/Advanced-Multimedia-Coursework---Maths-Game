@@ -72,7 +72,6 @@
 			this.SetPrice(this.can);
 			
 			this.main.addChild(this.can);
-			trace("CAN");
 		}
 		
 		private function CreateBottle()
@@ -85,7 +84,6 @@
 			this.SetPrice(this.bottle);
 			
 			this.main.addChild(this.bottle);
-			trace("BOTTLE");
 		}
 		
 		private function CreateBox()
@@ -98,7 +96,6 @@
 			this.SetPrice(this.box);
 			
 			this.main.addChild(this.box);
-			trace("BOX");
 		}
 		
 		private function SetPrice(product:MovieClip)
@@ -164,21 +161,16 @@
 					break;
 				}
 			}
-			
-			trace("Number to make: " + this.numberToMake);
 		}
 		
 		private function RemoveProducts()
 		{			
 			for (var i = (this.main.numChildren - 1); i >= 0; i--)
-			{
-				trace(this.main.getChildAt(i).name);
-				
+			{				
 				if (this.main.getChildAt(i).name == Money.ELEMENT_CAN ||
 					this.main.getChildAt(i).name == Money.ELEMENT_BOTTLE ||
 					this.main.getChildAt(i).name == Money.ELEMENT_BOX)
 				{
-					trace("REMOVED: " + this.main.getChildAt(i).name);
 					this.main.removeChildAt(i);
 				}
 			}
@@ -189,8 +181,8 @@
 		//*****************//
 		public function PenceToPounds(pence:Number):String
 		{
-			trace(pence);
 			var pounds:int = pence / 100;
+		
 			pence = pence % 100;
 			
 			if (pounds == 0)
@@ -208,13 +200,11 @@
 		public function IncreaseAmountOnCounter(amount:Number)
 		{
 			this.amountOnCounter += amount;
-			trace(this.amountOnCounter);
 		}
 		
 		public function DecreaseAmountOnCounter(amount:Number)
 		{
 			this.amountOnCounter -= amount;
-			trace(this.amountOnCounter);
 		}
 		
 		//***********************//

@@ -5,6 +5,8 @@
 	import com.game.elements.Can;
 	import com.game.elements.Bottle;
 	import com.game.elements.Box;
+	import flash.text.TextField;
+	import flash.events.MouseEvent;
 	
 	public class Money extends MovieClip {
 
@@ -29,6 +31,13 @@
 		public var fiftyPence_mc:MovieClip;
 		public var onePound_mc:MovieClip;
 		public var twoPound_mc:MovieClip;
+		public var submit_mc:MovieClip;
+		public var level_txt:TextField;
+		
+		// Number variables
+		private var amountOnCounter:Number = 0;
+		private var numberToMake:Number = 0;
+		private var levelNumber:Number = 1;
 		
 		public function Money() {
 			/* DO NOT PUT ANYTHING IN HERE */
@@ -39,9 +48,10 @@
 			this.main = this.stage.getChildAt(0) as Main;
 			this.game = this.main.game;
 			
-			this.CreateCan();
-			this.CreateBottle();
-			this.CreateBox();
+			this.submit_mc.mouseChildren = false;
+			this.submit_mc.addEventListener(MouseEvent.MOUSE_UP, CheckMoney);
+			
+			this.CreateProducts();
 		}
 		
 		//*******************//
@@ -51,9 +61,9 @@
 		{
 			this.can = new Can();
 			
-			this.can.x = 200;
-			this.can.y = 400;
-			this.SetPrice(this.can, 210);
+			this.can.x = 790;
+			this.can.y = 497;
+			this.SetPrice(this.can);
 			
 			this.main.addChild(this.can);
 		}
@@ -62,9 +72,9 @@
 		{
 			this.bottle = new Bottle();
 			
-			this.bottle.x = 300;
-			this.bottle.y = 400;
-			this.SetPrice(this.bottle, 99);
+			this.bottle.x = 956;
+			this.bottle.y = 530;
+			this.SetPrice(this.bottle);
 			
 			this.main.addChild(this.bottle);
 		}
@@ -73,16 +83,62 @@
 		{
 			this.box = new Box();
 			
-			this.box.x = 200;
-			this.box.y = 600;
-			this.SetPrice(this.box, 481);
+			this.box.x = 780;
+			this.box.y = 655;
+			this.SetPrice(this.box);
 			
 			this.main.addChild(this.box);
 		}
 		
-		private function SetPrice(product:MovieClip, price:Number)
+		private function SetPrice(product:MovieClip)
 		{
+			var price:Number = this.game.GenerateRandomNumber(50, 500);
+			
 			product["price_txt"].text = this.PenceToPounds(price);
+			
+			this.IncreaseNumberToMake(price);
+		}
+		
+		private function CreateProducts()
+		{
+			var numberOfProducts:Number = 0;
+			
+			switch (this.levelNumber)
+			{
+				case 1:
+					numberOfProducts = 1;
+				break;
+				case 2:
+					numberOfProducts = 1;
+				break;
+				case 3:
+					numberOfProducts = 2;
+				break;
+				case 4:
+					numberOfProducts = 2;
+				break;
+				case 5:
+					numberOfProducts = 3;
+				break;
+			}
+			
+			for (var i = 1; i <= numberOfProducts; i++)
+			{
+				var randomNum:Number = this.game.GenerateRandomNumber(1, 3);
+
+				switch (randomNum)
+				{
+					case 1:
+						this.CreateCan();
+					break;
+					case 2:
+						this.CreateBottle();
+					break;
+					case 3:
+						this.CreateBox();
+					break;
+				}
+			}
 		}
 		
 		//*****************//
@@ -97,6 +153,58 @@
 				return pence + "p";
 			
 			return "£" + pounds + "." + pence;
+		}
+		
+		//*****************************//
+		// AMOUNT ON COUNTER FUNCTIONS //
+		//*****************************//
+		public function IncreaseAmountOnCounter(amount:Number)
+		{
+			this.amountOnCounter += amount;
+			trace(this.amountOnCounter);
+		}
+		
+		public function DecreaseAmountOnCounter(amount:Number)
+		{
+			this.amountOnCounter -= amount;
+			trace(this.amountOnCounter);
+		}
+		
+		//***********************//
+		// CHECK MONEY FUNCTIONS //
+		//***********************//
+		private function CheckMoney(e:MouseEvent = null)
+		{
+			if (this.amountOnCounter == this.numberToMake)
+			{
+				trace("Win!");
+				this.IncrementLevel();
+			}else{
+				trace("Lose!");
+			}
+		}
+		
+		//*****************//
+		// LEVEL FUNCTIONS //
+		//*****************//
+		private function SetLevel(level:Number)
+		{
+			this.levelNumber = level;
+			this.level_txt.text = "Level " + level;
+		}
+		
+		private function IncrementLevel()
+		{
+			this.SetLevel(this.levelNumber + 1);
+		}
+		
+		//**************************//
+		// NUMBER TO MAKE FUNCTIONS //
+		//**************************//
+		private function IncreaseNumberToMake(number:Number)
+		{
+			this.numberToMake += number;
+			trace(this.numberToMake);
 		}
 	}	
 }

@@ -6,8 +6,11 @@
 	import com.game.scenes.Money;
 	import com.game.scenes.Main;
 	import flash.utils.*;
+	import com.greensock.TweenMax;
+	import fl.transitions.Tween;
+	import com.greensock.easing.*;
 	
-	public class MoneyObject extends MovieClip {
+	public class Coin extends MovieClip {
 
 		// Value variables
 		private var value:Number;
@@ -19,7 +22,10 @@
 		// Game variables
 		private var main:Main;
 		
-		public function MoneyObject() {
+		// Tween variables
+		private var tween:TweenMax;
+		
+		public function Coin() {
 			this.addEventListener(Event.ADDED_TO_STAGE, this.Init);
 			this.addEventListener(MouseEvent.MOUSE_DOWN, this.StartDragFromMoneyHolder);
 		}
@@ -117,6 +123,7 @@
 			}else if (this.dropTarget.parent.name == Money.ELEMENT_COUNTER){
 				this.CreateNewMoney();
 				this.AddStartDragFromCounter();
+				this.main.swfMoney.IncreaseAmountOnCounter(this.value);
 			}else{
 				this.AnimateBackToMoneyHolder();
 				this.AddStartDragFromMoneyHolder();
@@ -138,6 +145,7 @@
 			if (this.dropTarget == null)
 			{
 				this.DeleteMoney();
+				this.main.swfMoney.DecreaseAmountOnCounter(this.value);
 			}else{
 				this.AddStartDragFromCounter();
 			}
@@ -148,12 +156,12 @@
 		//*********************//
 		private function AnimateBackToMoneyHolder()
 		{
-			this.x = this.nX;
-			this.y = this.nY;
+			tween = new TweenMax(this, 1, { x: this.nX, y: this.nY, ease: Elastic.easeOut });
+			tween.play();
 		}
 		
 		//***************************//
-		// CREATe & DELETE FUNCTIONS //
+		// CREATE & DELETE FUNCTIONS //
 		//***************************//
 		private function CreateNewMoney()
 		{

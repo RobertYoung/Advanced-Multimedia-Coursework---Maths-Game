@@ -3,10 +3,11 @@
 	import flash.display.MovieClip;
 	import com.game.elements.Coin;
 	
-	public class OnePence extends Coin {
+	public class TenPence extends Coin {
 		
-		public function OnePence() {
-			this.SetValue(1);
+		
+		public function TenPence() {
+			this.SetValue(10);
 		}
 	}
 }

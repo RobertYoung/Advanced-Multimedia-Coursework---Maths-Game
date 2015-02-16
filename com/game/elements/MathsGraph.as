@@ -3,6 +3,9 @@
 	import flash.display.MovieClip;
 	import com.game.factory.MathsSharedObject;
 	import com.game.elements.*;
+	import flash.display.Graphics;
+	import flash.display.Shape;
+	import flash.geom.Point;
 	
 	public class MathsGraph extends MovieClip {
 		
@@ -31,6 +34,7 @@
 		private var additionLevel3Mark:Mark;
 		private var additionLevel4Mark:Mark;
 		private var additionLevel5Mark:Mark;
+		private var additionLine:Shape = new Shape();
 
 		// Subtraction mark variables
 		private var subtractionLevel1Mark:Mark;
@@ -38,6 +42,7 @@
 		private var subtractionLevel3Mark:Mark;
 		private var subtractionLevel4Mark:Mark;
 		private var subtractionLevel5Mark:Mark;
+		private var subtractionLine:Shape = new Shape();;
 		
 		// Multiplication mark variables
 		private var multiplicationLevel1Mark:Mark;
@@ -45,6 +50,7 @@
 		private var multiplicationLevel3Mark:Mark;
 		private var multiplicationLevel4Mark:Mark;
 		private var multiplicationLevel5Mark:Mark;
+		private var multiplicationLine:Shape = new Shape();;
 		
 		// Division mark variables
 		private var divisionLevel1Mark:Mark;
@@ -52,6 +58,7 @@
 		private var divisionLevel3Mark:Mark;
 		private var divisionLevel4Mark:Mark;
 		private var divisionLevel5Mark:Mark;
+		private var divisionLine:Shape = new Shape();
 		
 		public function MathsGraph() {
 			this.mathsData = MathsSharedObject.getInstance();
@@ -99,11 +106,13 @@
 		public function DisplayAdditionStats()
 		{
 			this.DisplayMarkers("addition");
+			this.DrawLineFromMarkers("addition");
 		}
 		
 		public function HideAdditionStats()
 		{
 			this.HideMarkers("addition");
+			this.HideLineFromMarkers("addition");
 		}
 		
 		//***********************//
@@ -112,11 +121,13 @@
 		public function DisplaySubtractionStats()
 		{
 			this.DisplayMarkers("subtraction");
+			this.DrawLineFromMarkers("subtraction");
 		}
 		
 		public function HideSubtractionStats()
 		{
 			this.HideMarkers("subtraction");
+			this.HideLineFromMarkers("subtraction");
 		}
 		
 		//**************************//
@@ -125,11 +136,13 @@
 		public function DisplayMultiplicationStats()
 		{
 			this.DisplayMarkers("multiplication");
+			this.DrawLineFromMarkers("multiplication");
 		}
 		
 		public function HideMultiplicationStats()
 		{
 			this.HideMarkers("multiplication");
+			this.HideLineFromMarkers("multiplication");
 		}
 		
 		//********************//
@@ -138,11 +151,13 @@
 		public function DisplayDivisionStats()
 		{
 			this.DisplayMarkers("division");
+			this.DrawLineFromMarkers("division");
 		}
 		
 		public function HideDivisionStats()
 		{
 			this.HideMarkers("division");
+			this.HideLineFromMarkers("division");
 		}
 		
 		//******************//
@@ -165,10 +180,17 @@
 				
 				var mark = this[level + "Level" + i + "Mark"];
 				
-				mark.x = 0;
+				
+				//mark.x = 0;
+				mark.x = this["level" + i + "_mc"].x;
 				mark.y = yPos; 
 				
-				this["level" + i + "_mc"].addChild(mark);
+				var point:Point = this.localToGlobal(new Point(mark.x, mark.y));
+				mark.x = point.x;
+				mark.y = point.y;
+				//this["level" + i + "_mc"].addChild(mark);
+				//trace(point);
+				this.stage.addChild(mark);
 			}
 		}
 		
@@ -180,6 +202,31 @@
 				
 				mark.parent.removeChild(mark);
 			}
+		}
+		
+		//****************//
+		// LINE FUNCTIONS //
+		//****************//
+		private function DrawLineFromMarkers(level:String)
+		{			
+			var line:Shape = this[level + "Line"];
+			
+			line.graphics.lineStyle(2);
+			line.graphics.moveTo(this[level + "Level1Mark"].x, this[level + "Level1Mark"].y);
+			
+			for (var i = 2; i <= 5; i++)
+			{
+				line.graphics.lineTo(this[level + "Level" + i + "Mark"].x, this[level + "Level" + i + "Mark"].y);
+			}
+			
+			this.stage.addChild(line);
+		}
+		
+		private function HideLineFromMarkers(level:String)
+		{
+			var line:Shape = this[level + "Line"];
+			
+			line.parent.removeChild(line);
 		}
 	}
 }

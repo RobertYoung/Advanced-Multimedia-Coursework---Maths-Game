@@ -80,7 +80,9 @@
 		
 		private function FillTween(newX:Number)
 		{
-			this.fillTween = new TimelineMax();
+			if (this.fillTween == null)
+				this.fillTween = new TimelineMax();
+			
 			this.fillTween.append(new TweenMax(this.progressFill_mc, 1, { x: newX }));
 		}
 		

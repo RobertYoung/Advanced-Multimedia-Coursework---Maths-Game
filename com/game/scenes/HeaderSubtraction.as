@@ -23,6 +23,7 @@
 		private var currentNumber:Number;
 		private var numberToMake:Number;
 		private var levelNumber:Number;
+		private var originalNumber:Number;
 		
 		public function HeaderSubtraction() {
 			/* DO NOT PUT ANYTHING IN HERE*/
@@ -36,7 +37,8 @@
 			this.game.SetUpdateScoreFunction(this.SetCurrentNumber);
 			this.GenerateRandomCurrentNumber();
 			this.SetLevel(1);
-			this.game.SetMaxWaterLevel(500); //500
+			this.game.SetMaxWaterLevel(500);
+			this.game.AddProgressMeter(this.numberToMake, this.originalNumber);
 			this.game.StartRain();
 		}
 		
@@ -49,6 +51,7 @@
 		private function GenerateRandomCurrentNumber()
 		{
 			this.SetCurrentNumber(this.game.GenerateRandomNumber(20, 20), false);
+			this.originalNumber = this.currentNumber;
 		}
 		
 		private function SetCurrentNumber(setNumber:Number, animated:Boolean = true)
@@ -97,6 +100,8 @@
 		//**************//
 		private function CheckScores()
 		{
+			this.game.UpdateProgressMeter(this.originalNumber - this.currentNumber);
+			
 			if (this.currentNumber < this.numberToMake)
 			{
 				// Incorrect
@@ -142,7 +147,7 @@
 		public function SetLevel(level:Number)
 		{
 			this.levelNumber = level;
-			this.level_txt.text = "Level " + level + ":";
+			this.level_txt.text = "Level " + level;
 		}
 		
 		public function IncrementLevel()

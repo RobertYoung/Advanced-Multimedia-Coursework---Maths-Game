@@ -9,6 +9,12 @@
 	import flash.events.MouseEvent;
 	import com.game.elements.IncorrectAlertview;
 	import com.game.elements.CompleteAlertview;
+	import com.greensock.TimelineMax;
+	import com.greensock.TimelineLite;
+	import com.greensock.TweenMax;
+	import com.game.elements.Coin;
+	import flash.utils.*;
+	import com.game.elements.*;
 	
 	public class Money extends MovieClip {
 
@@ -28,14 +34,14 @@
 		
 		// Element on SWF file
 		public var counter_mc:MovieClip;
-		public var onePence_mc:MovieClip;
-		public var twoPence_mc:MovieClip;
-		public var fivePence_mc:MovieClip;
-		public var tenPence_mc:MovieClip;
-		public var twentyPence_mc:MovieClip;
-		public var fiftyPence_mc:MovieClip;
-		public var onePound_mc:MovieClip;
-		public var twoPound_mc:MovieClip;
+		public var onePence_mc:OnePence;
+		public var twoPence_mc:TwoPence;
+		public var fivePence_mc:FivePence;
+		public var tenPence_mc:TenPence;
+		public var twentyPence_mc:TwentyPence;
+		public var fiftyPence_mc:FiftyPence;
+		public var onePound_mc:OnePound;
+		public var twoPound_mc:TwoPound;
 		public var submit_mc:MovieClip;
 		public var level_txt:TextField;
 		
@@ -43,6 +49,14 @@
 		private var amountOnCounter:Number = 0;
 		private var numberToMake:Number = 0;
 		private var levelNumber:Number = 1;
+		
+		// Tween variables
+		private var canTween:TimelineMax;
+		private var bottleTween:TimelineMax;
+		private var boxTween:TimelineMax;
+		
+		// Coin variables
+		public var coinArray:Array = new Array();
 		
 		public function Money() {
 			/* DO NOT PUT ANYTHING IN HERE */
@@ -59,48 +73,120 @@
 			this.CreateProducts();
 		}
 		
-		//*******************//
-		// PRODUCT FUNCTIONS //
-		//*******************//
+		//***************//
+		// CAN FUNCTIONS //
+		//***************//
 		private function CreateCan()
 		{
 			this.can = new Can();
 			
-			this.can.x = 790;
+			this.can.x = 1500;
 			this.can.y = 497;
 			this.can.name = Money.ELEMENT_CAN;
 			this.SetPrice(this.can);
 			
 			this.main.addChild(this.can);
+			
+			this.ShowCan();
 		}
 		
+		private function ShowCan()
+		{
+			this.canTween = new TimelineMax();
+			this.canTween.append(new TweenMax(this.can, 1, { x: 790, onReverseComplete: this.RemoveCan } ));
+			this.canTween.play();
+		}
+		
+		private function HideCan()
+		{
+			if (this.canTween != null)
+				this.canTween.reverse();
+		}
+		
+		private function RemoveCan()
+		{
+			if (!this.canTween._active)
+				this.can.parent.removeChild(this.can);
+		}
+		
+		//******************//
+		// BOTTLE FUNCTIONS //
+		//******************//
 		private function CreateBottle()
 		{
 			this.bottle = new Bottle();
 			
-			this.bottle.x = 956;
+			this.bottle.x = 1500;
 			this.bottle.y = 530;
 			this.bottle.name = Money.ELEMENT_BOTTLE;
 			this.SetPrice(this.bottle);
 			
 			this.main.addChild(this.bottle);
+			
+			this.ShowBottle();
 		}
 		
+		private function ShowBottle()
+		{
+			this.bottleTween = new TimelineMax();
+			this.bottleTween.append(new TweenMax(this.bottle, 1, { x: 956, onReverseComplete: this.RemoveBottle } ));
+			this.bottleTween.play();
+		}
+		
+		private function HideBottle()
+		{
+			if (this.bottleTween != null)
+				this.bottleTween.reverse();
+		}
+		
+		private function RemoveBottle()
+		{
+			if (!this.bottleTween._active)
+				this.bottle.parent.removeChild(this.bottle);
+		}
+		
+		//***************//
+		// BOX FUNCTIONS //
+		//***************//
 		private function CreateBox()
 		{
 			this.box = new Box();
 			
-			this.box.x = 780;
+			this.box.x = 1500;
 			this.box.y = 655;
 			this.box.name = Money.ELEMENT_BOX
 			this.SetPrice(this.box);
 			
 			this.main.addChild(this.box);
+			
+			this.ShowBox();
 		}
 		
+		private function ShowBox()
+		{
+			this.boxTween = new TimelineMax();
+			this.boxTween.append(new TweenMax(this.box, 1, { x: 780, onReverseComplete: this.RemoveBox } ));
+			this.boxTween.play();
+		}
+		
+		private function HideBox()
+		{
+			if (this.boxTween != null)
+				this.boxTween.reverse();
+		}
+		
+		private function RemoveBox()
+		{
+			if (!this.boxTween._active)
+				this.box.parent.removeChild(this.box);
+		}
+		
+		//*******************//
+		// PRODUCT FUNCTIONS //
+		//*******************//
 		private function SetPrice(product:MovieClip)
 		{
-			var price:Number = this.game.GenerateRandomNumber(50, 50);
+			var price:Number = this.game.GenerateRandomNumber(50, 1000);
 			
 			product["price_txt"].text = this.PenceToPounds(price);
 			
@@ -165,14 +251,18 @@
 		
 		private function RemoveProducts()
 		{			
-			for (var i = (this.main.numChildren - 1); i >= 0; i--)
-			{				
-				if (this.main.getChildAt(i).name == Money.ELEMENT_CAN ||
-					this.main.getChildAt(i).name == Money.ELEMENT_BOTTLE ||
-					this.main.getChildAt(i).name == Money.ELEMENT_BOX)
-				{
-					this.main.removeChildAt(i);
-				}
+			this.HideCan();
+			this.HideBottle();
+			this.HideBox();
+		}
+		
+		private function RemoveCoins()
+		{
+			for (var index = this.coinArray.length - 1; index >= 0; index--)
+			{
+				trace(index);
+				var coin:Coin = this.coinArray[index] as Coin;
+				coin.RemoveFromScreenTween();
 			}
 		}
 		
@@ -200,11 +290,13 @@
 		public function IncreaseAmountOnCounter(amount:Number)
 		{
 			this.amountOnCounter += amount;
+			trace("amount: " + this.amountOnCounter);
 		}
 		
 		public function DecreaseAmountOnCounter(amount:Number)
 		{
 			this.amountOnCounter -= amount;
+			trace("amount: " + this.amountOnCounter);
 		}
 		
 		//***********************//
@@ -224,6 +316,7 @@
 					this.RemoveProducts();
 					this.ResetNumberToMake();
 					this.CreateProducts();
+					this.RemoveCoins();
 				}
 			}else{
 				var incorrectAlertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", "The amount of change on the counter is incorrect", this.main.RemoveAlertviews);
@@ -258,5 +351,12 @@
 		{
 			this.numberToMake = 0;
 		}
+		
+		//*******************//
+ 		// CLASS INFORMATION //
+		//*******************//
+		function GetClass(object:Object):Class { 
+			return getDefinitionByName(getQualifiedClassName(object)) as Class;
+ 		} 
 	}	
 }

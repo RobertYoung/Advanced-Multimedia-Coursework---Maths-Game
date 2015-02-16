@@ -9,6 +9,7 @@
 	import com.greensock.TweenMax;
 	import fl.transitions.Tween;
 	import com.greensock.easing.*;
+	import com.game.factory.Game;
 	
 	public class Coin extends MovieClip {
 
@@ -24,6 +25,7 @@
 		
 		// Tween variables
 		private var tween:TweenMax;
+		private var removeTween:TweenMax;
 		
 		public function Coin() {
 			this.addEventListener(Event.ADDED_TO_STAGE, this.Init);
@@ -124,6 +126,7 @@
 				this.CreateNewMoney();
 				this.AddStartDragFromCounter();
 				this.main.swfMoney.IncreaseAmountOnCounter(this.value);
+				this.main.swfMoney.coinArray.push(this);
 			}else{
 				this.AnimateBackToMoneyHolder();
 				this.AddStartDragFromMoneyHolder();
@@ -146,6 +149,7 @@
 			{
 				this.DeleteMoney();
 				this.main.swfMoney.DecreaseAmountOnCounter(this.value);
+				this.main.swfMoney.coinArray.splice(this.main.swfMoney.coinArray.indexOf(this), 1);
 			}else{
 				this.AddStartDragFromCounter();
 			}
@@ -158,6 +162,14 @@
 		{
 			tween = new TweenMax(this, 1, { x: this.nX, y: this.nY, ease: Elastic.easeOut });
 			tween.play();
+		}
+		
+		public function RemoveFromScreenTween()
+		{
+			this.removeTween = new TweenMax(this, 1, { y: -400 });
+			this.removeTween.play();
+			this.main.swfMoney.DecreaseAmountOnCounter(this.value);
+			this.main.swfMoney.coinArray.splice(this.main.swfMoney.coinArray.indexOf(this), 1);
 		}
 		
 		//***************************//

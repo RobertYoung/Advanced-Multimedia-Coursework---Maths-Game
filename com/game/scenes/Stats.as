@@ -4,7 +4,8 @@
 	import flash.events.MouseEvent;
 	import flash.events.Event;
 	import flash.geom.ColorTransform;
-	
+	import com.greensock.TweenMax;
+	import com.greensock.plugins.BevelFilterPlugin;
 	
 	public class Stats extends MovieClip {
 		
@@ -22,6 +23,14 @@
 		private var displayMultiplication:Boolean = false;
 		private var displayDivision:Boolean = false;
 		
+		// Button tweens
+		private var additionTween:TweenMax;
+		private var subtractionTween:TweenMax;
+		private var multiplicationTween:TweenMax;
+		private var divisionTween:TweenMax;
+		private var moneyTween:TweenMax
+		
+		// Constant values
 		public static const ADDITION_COLOUR = 0x0099FF;
 		public static const SUBTRACTION_COLOUR = 0xFF3300;
 		public static const MULTIPLICATION_COLOUR = 0xFFCC33;
@@ -50,6 +59,12 @@
 			this.SetButtonColour("multiplication", Stats.MULTIPLICATION_COLOUR);
 			this.SetButtonColour("division", Stats.DIVISION_COLOUR);
 			this.SetButtonColour("money", Stats.MONEY_COLOUR);
+			
+			this.BevelTween("addition");
+			this.BevelTween("subtraction");
+			this.BevelTween("multiplication");
+			this.BevelTween("division");
+			this.BevelTween("money");
 		}
 		
 		//******************//
@@ -83,9 +98,13 @@
 			{
 				this.DisplayAdditionStats();
 				this.displayAddition = true;
+				
+				if (this.additionTween != null)
+					this.additionTween.reverse();
 			}else{
 				this.HideAdditionStats();
 				this.displayAddition = false;
+				this.BevelTween("addition");
 			}
 		}
 		
@@ -108,9 +127,13 @@
 			{
 				this.DisplaySubtractionStats();
 				this.displaySubtraction = true;
+				
+				if (this.subtractionTween != null)
+					this.subtractionTween.reverse();
 			}else{
 				this.HideSubtractionStats();
 				this.displaySubtraction = false;
+				this.BevelTween("subtraction");
 			}
 		}
 		
@@ -133,9 +156,13 @@
 			{
 				this.DisplayMultiplicationStats();
 				this.displayMultiplication = true;
+				
+				if (this.multiplicationTween != null)
+					this.multiplicationTween.reverse();
 			}else{
 				this.HideMultiplicationStats();
 				this.displayMultiplication = false;
+				this.BevelTween("multiplication");
 			}
 		}
 		
@@ -158,10 +185,23 @@
 			{
 				this.DisplayDivisionStats();
 				this.displayDivision = true;
+				
+				if (this.divisionTween != null)
+					this.divisionTween.reverse();
 			}else{
 				this.HideDivisionStats();
 				this.displayDivision = false;
+				this.BevelTween("division");
 			}
+		}
+		
+		//*********************//
+		// ANIMATION FUNCITONS //
+		//*********************//
+		private function BevelTween(level:String)
+		{
+			this[level + "Tween"] = new TweenMax(this[level + "_mc"], 0.2, {bevelFilter:{blurX:20, blurY:20, distance:10, angle:45, strength:5}});
+			this[level + "Tween"].play();
 		}
 	}
 }

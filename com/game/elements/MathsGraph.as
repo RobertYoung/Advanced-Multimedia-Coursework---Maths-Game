@@ -7,8 +7,17 @@
 	import flash.display.Shape;
 	import flash.geom.Point;
 	import com.game.scenes.Stats;
+	import com.greensock.TimelineMax;
+	import com.greensock.TimelineLite;
+	import com.greensock.TweenMax;
+	import com.greensock.easing.*;
+	import com.game.scenes.Main;
+	import flash.events.Event;
 	
 	public class MathsGraph extends MovieClip {
+
+		// Game variables
+		private var main:Main;
 		
 		// Data variables
 		private var mathsData:MathsSharedObject;
@@ -36,6 +45,7 @@
 		private var additionLevel4Mark:Mark;
 		private var additionLevel5Mark:Mark;
 		private var additionLine:Shape = new Shape();
+		private var additionTween:TimelineMax = new TimelineMax();
 
 		// Subtraction mark variables
 		private var subtractionLevel1Mark:Mark;
@@ -43,7 +53,8 @@
 		private var subtractionLevel3Mark:Mark;
 		private var subtractionLevel4Mark:Mark;
 		private var subtractionLevel5Mark:Mark;
-		private var subtractionLine:Shape = new Shape();;
+		private var subtractionLine:Shape = new Shape();
+		private var subtractionTween:TimelineMax = new TimelineMax();
 		
 		// Multiplication mark variables
 		private var multiplicationLevel1Mark:Mark;
@@ -51,7 +62,8 @@
 		private var multiplicationLevel3Mark:Mark;
 		private var multiplicationLevel4Mark:Mark;
 		private var multiplicationLevel5Mark:Mark;
-		private var multiplicationLine:Shape = new Shape();;
+		private var multiplicationLine:Shape = new Shape();
+		private var multiplicationTween:TimelineMax = new TimelineMax();
 		
 		// Division mark variables
 		private var divisionLevel1Mark:Mark;
@@ -60,10 +72,21 @@
 		private var divisionLevel4Mark:Mark;
 		private var divisionLevel5Mark:Mark;
 		private var divisionLine:Shape = new Shape();
+		private var divisionTween:TimelineMax = new TimelineMax();
 		
 		public function MathsGraph() {
 			this.mathsData = MathsSharedObject.getInstance();
 			this.GetData();
+			
+			this.addEventListener(Event.ADDED_TO_STAGE, this.AddedToStage);
+		}
+		
+		//******//
+		// INIT //
+		//******//
+		private function AddedToStage(e:Event)
+		{
+			this.main = this.stage.getChildAt(0) as Main;
 		}
 		
 		private function GetData()
@@ -106,8 +129,8 @@
 		//********************//
 		public function DisplayAdditionStats()
 		{
-			this.DisplayMarkers("addition");
-			this.DrawLineFromMarkers("addition", Stats.ADDITION_COLOUR);
+			this.additionTween = new TimelineMax();
+			this.DisplayMarkers("addition", Stats.ADDITION_COLOUR);
 		}
 		
 		public function HideAdditionStats()
@@ -121,8 +144,8 @@
 		//***********************//
 		public function DisplaySubtractionStats()
 		{
-			this.DisplayMarkers("subtraction");
-			this.DrawLineFromMarkers("subtraction", Stats.SUBTRACTION_COLOUR);
+			this.subtractionTween = new TimelineMax();
+			this.DisplayMarkers("subtraction", Stats.SUBTRACTION_COLOUR);
 		}
 		
 		public function HideSubtractionStats()
@@ -136,8 +159,8 @@
 		//**************************//
 		public function DisplayMultiplicationStats()
 		{
-			this.DisplayMarkers("multiplication");
-			this.DrawLineFromMarkers("multiplication", Stats.MULTIPLICATION_COLOUR);
+			this.multiplicationTween = new TimelineMax();
+			this.DisplayMarkers("multiplication", Stats.MULTIPLICATION_COLOUR);
 		}
 		
 		public function HideMultiplicationStats()
@@ -151,8 +174,8 @@
 		//********************//
 		public function DisplayDivisionStats()
 		{
-			this.DisplayMarkers("division");
-			this.DrawLineFromMarkers("division", Stats.DIVISION_COLOUR);
+			this.divisionTween = new TimelineMax();
+			this.DisplayMarkers("division", Stats.DIVISION_COLOUR);
 		}
 		
 		public function HideDivisionStats()
@@ -164,8 +187,10 @@
 		//******************//
 		// MARKER FUNCTIONS //
 		//******************//
-		private function DisplayMarkers(level:String)
+		private function DisplayMarkers(level:String, colour:int)
 		{
+			var timeline:TimelineMax = this[level + "Tween"];
+			
 			for (var i = 1; i <= 5; i++)
 			{
 				var data:Number = this[level + "Data"][i - 1];
@@ -185,21 +210,24 @@
 				mark.y = yPos; 
 				
 				var point:Point = this.localToGlobal(new Point(mark.x, mark.y));
-				mark.x = point.x;
-				mark.y = point.y;
 				
-				this.stage.addChild(mark);
+				mark.x = point.x;
+				mark.y = -100;
+				
+				this.main.addChild(mark);
+				
+				timeline.append(new TweenMax(mark, 0.2, { y: point.y, ease: Bounce.easeInOut } ));
 			}
+			
+			timeline.addCallback(this.DrawLineFromMarkers, null, [ level, colour ] );
+			timeline.play();
 		}
 		
 		private function HideMarkers(level:String)
 		{
-			for (var i = 1; i <= 5; i++)
-			{
-				var mark:Mark = this[level + "Level" + i + "Mark"] as Mark;
-				
-				mark.parent.removeChild(mark);
-			}
+			var tween:TimelineMax = this[level + "Tween"];
+			
+			tween.reverse();
 		}
 		
 		//****************//
@@ -217,14 +245,19 @@
 				line.graphics.lineTo(this[level + "Level" + i + "Mark"].x, this[level + "Level" + i + "Mark"].y);
 			}
 			
-			this.stage.addChild(line);
+			this.main.addChild(line);
 		}
 		
 		private function HideLineFromMarkers(level:String)
 		{
-			var line:Shape = this[level + "Line"];
-			
-			line.parent.removeChild(line);
+			try{
+				var line:Shape = this[level + "Line"];
+				
+				if (line != null)
+					line.parent.removeChild(line);
+			}catch(e:Error){
+				
+			}
 		}
 	}
 }

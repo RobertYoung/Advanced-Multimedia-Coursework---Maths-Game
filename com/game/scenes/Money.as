@@ -260,7 +260,6 @@
 		{
 			for (var index = this.coinArray.length - 1; index >= 0; index--)
 			{
-				trace(index);
 				var coin:Coin = this.coinArray[index] as Coin;
 				coin.RemoveFromScreenTween();
 			}
@@ -290,13 +289,11 @@
 		public function IncreaseAmountOnCounter(amount:Number)
 		{
 			this.amountOnCounter += amount;
-			trace("amount: " + this.amountOnCounter);
 		}
 		
 		public function DecreaseAmountOnCounter(amount:Number)
 		{
 			this.amountOnCounter -= amount;
-			trace("amount: " + this.amountOnCounter);
 		}
 		
 		//***********************//

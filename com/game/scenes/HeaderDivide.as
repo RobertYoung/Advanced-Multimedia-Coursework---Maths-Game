@@ -4,7 +4,7 @@
 	import com.game.factory.Game;
 	import flash.text.TextField;
 	import com.game.elements.IncorrectAlertview;
-	
+	import com.game.factory.MathsSharedObject;
 	
 	public class HeaderDivide extends MovieClip {
 		
@@ -118,6 +118,13 @@
 			this.SetLevel(this.levelNumber);
 		}
 		
+		private function SaveScore()
+		{
+			MathsSharedObject.getInstance().SetDivisionLevelData(this.levelNumber, this.game.GetScoreTimer());
+			this.game.StartScoreTimer();
+			trace(MathsSharedObject.getInstance().GetDivisionLevelData(this.levelNumber));
+		}
+		
 		//*****************//
 		// RAINDROP CAUGHT //
 		//*****************//
@@ -127,6 +134,8 @@
 			
 			if ((this.number1 / this.number2) == this.GetNumberToMake())
 			{
+				this.SaveScore();
+				
 				// Correct
 				if (this.levelNumber == 5)
 				{

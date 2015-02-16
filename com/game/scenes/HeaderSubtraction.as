@@ -6,7 +6,7 @@
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	import com.game.elements.IncorrectAlertview;
-	
+	import com.game.factory.MathsSharedObject;
 	
 	public class HeaderSubtraction extends MovieClip {
 		
@@ -112,6 +112,8 @@
 				this.main.game.ResetAfterError();
 			}else if (this.currentNumber == this.numberToMake)
 			{
+				this.SaveScore();
+				
 				// Correct
 				if (this.levelNumber == 5)
 				{
@@ -125,6 +127,13 @@
 					this.main.swfWater.DecreaseWaterLevel();
 				}
 			}
+		}
+		
+		private function SaveScore()
+		{
+			MathsSharedObject.getInstance().SetSubtractionLevelData(this.levelNumber, this.game.GetScoreTimer());
+			this.game.StartScoreTimer();
+			trace(MathsSharedObject.getInstance().GetSubtractionLevelData(this.levelNumber));
 		}
 		
 		//**************************//

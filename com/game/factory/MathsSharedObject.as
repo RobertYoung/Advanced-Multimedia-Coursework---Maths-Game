@@ -18,7 +18,7 @@
  				throw new Error(this + " is a Singleton. Access using getInstance()"); 
 
 			sharedObject = SharedObject.getLocal(MathsSharedObject.MATHS_LOCAL_DATA); 
- 			sharedObject.flush();
+ 			this.SaveData();
 		}
 
 		//*********************//
@@ -36,13 +36,30 @@
  			return instance; 
  		} 
 		
+		//******//
+		// SAVE //
+		//******//
+		private function SaveData()
+		{
+			this.sharedObject.flush();
+		}
+		
+		public function ClearData()
+		{
+			this.sharedObject.clear();
+			this.SaveData();
+		}
+		
 		//********************//
 		// ADDITION FUNCTIONS //
 		//********************//
 		public function SetAdditionLevelData(level:Number, time:Number)
 		{
-			if (time < this.GetAdditionLevelData(level))
+			if (time < this.GetAdditionLevelData(level) || isNaN(this.GetAdditionLevelData(level)))
+			{
 				this.sharedObject.data["addition_level" + level] = time;
+				this.SaveData();
+			}
 		}
 		
 		public function GetAdditionLevelData(level:Number):Number
@@ -55,13 +72,50 @@
 		//***********************//
 		public function SetSubtractionLevelData(level:Number, time:Number)
 		{
-			if (time < this.GetSubtractionLevelData(level))
+			if (time < this.GetSubtractionLevelData(level) || isNaN(this.GetSubtractionLevelData(level)))
+			{
 				this.sharedObject.data["subtraction_level" + level] = time;
+				this.SaveData();
+			}
 		}
 		
 		public function GetSubtractionLevelData(level:Number):Number
 		{
 			return this.sharedObject.data["subtraction_level" + level];
+		}
+		
+		//**************************//
+		// MULTIPLICATION FUNCTIONS //
+		//**************************//
+		public function SetMultiplicationLevelData(level:Number, time:Number)
+		{
+			if (time < this.GetMultiplicationLevelData(level) || isNaN(this.GetMultiplicationLevelData(level)))
+			{
+				this.sharedObject.data["multiplication_level" + level] = time;
+				this.SaveData();
+			}
+		}
+		
+		public function GetMultiplicationLevelData(level:Number):Number
+		{
+			return this.sharedObject.data["multiplication_level" + level];
+		}
+		
+		//********************//
+		// DIVISION FUNCTIONS //
+		//********************//
+		public function SetDivisionLevelData(level:Number, time:Number)
+		{
+			if (time < this.GetDivisionLevelData(level) || isNaN(this.GetDivisionLevelData(level)))
+			{
+				this.sharedObject.data["division_level" + level] = time;
+				this.SaveData();
+			}
+		}
+		
+		public function GetDivisionLevelData(level:Number):Number
+		{
+			return this.sharedObject.data["division_level" + level];
 		}
 	}
 }

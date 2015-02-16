@@ -16,8 +16,8 @@
 		var main:Main;
 		var duration:Number = 8;
 		var rainTimer:Timer;
-		var raindropMinValue:Number = 1;
-		var raindropMaxValue:Number = 2;
+		var raindropMinValue:Number = 10;
+		var raindropMaxValue:Number = 11;
 		var scoreTimer:Timer;
 		
 		// Function variables

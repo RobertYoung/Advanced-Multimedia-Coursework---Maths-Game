@@ -141,7 +141,6 @@
 			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadStatsComplete });
 		
 			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
-			loader.append(new SWFLoader(Main.SWF_LOGO + ".swf", { name: Main.SWF_LOGO, container: this }));
 			loader.append(new SWFLoader(Main.SWF_STATS + ".swf", { name: Main.SWF_STATS, container: this }));
 			loader.load();
 		}
@@ -149,11 +148,9 @@
 		private function LoadStatsComplete(e:LoaderEvent)
 		{
 			this.swfBackButton = LoaderMax.getContent(Main.SWF_BACK_BUTTON).rawContent as BackButton;
-			this.swfLogo = LoaderMax.getContent(Main.SWF_LOGO).rawContent as Logo;
 			this.swfStats = LoaderMax.getContent(Main.SWF_STATS).rawContent as Stats;
 			
 			this.swfBackButton.Init();
-			this.swfLogo.Init();
 			this.swfStats.Init();
 			
 			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadMenuFromMouseEvent);

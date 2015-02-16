@@ -6,6 +6,7 @@
 	import flash.display.Graphics;
 	import flash.display.Shape;
 	import flash.geom.Point;
+	import com.game.scenes.Stats;
 	
 	public class MathsGraph extends MovieClip {
 		
@@ -106,7 +107,7 @@
 		public function DisplayAdditionStats()
 		{
 			this.DisplayMarkers("addition");
-			this.DrawLineFromMarkers("addition");
+			this.DrawLineFromMarkers("addition", Stats.ADDITION_COLOUR);
 		}
 		
 		public function HideAdditionStats()
@@ -121,7 +122,7 @@
 		public function DisplaySubtractionStats()
 		{
 			this.DisplayMarkers("subtraction");
-			this.DrawLineFromMarkers("subtraction");
+			this.DrawLineFromMarkers("subtraction", Stats.SUBTRACTION_COLOUR);
 		}
 		
 		public function HideSubtractionStats()
@@ -136,7 +137,7 @@
 		public function DisplayMultiplicationStats()
 		{
 			this.DisplayMarkers("multiplication");
-			this.DrawLineFromMarkers("multiplication");
+			this.DrawLineFromMarkers("multiplication", Stats.MULTIPLICATION_COLOUR);
 		}
 		
 		public function HideMultiplicationStats()
@@ -151,7 +152,7 @@
 		public function DisplayDivisionStats()
 		{
 			this.DisplayMarkers("division");
-			this.DrawLineFromMarkers("division");
+			this.DrawLineFromMarkers("division", Stats.DIVISION_COLOUR);
 		}
 		
 		public function HideDivisionStats()
@@ -180,16 +181,13 @@
 				
 				var mark = this[level + "Level" + i + "Mark"];
 				
-				
-				//mark.x = 0;
 				mark.x = this["level" + i + "_mc"].x;
 				mark.y = yPos; 
 				
 				var point:Point = this.localToGlobal(new Point(mark.x, mark.y));
 				mark.x = point.x;
 				mark.y = point.y;
-				//this["level" + i + "_mc"].addChild(mark);
-				//trace(point);
+				
 				this.stage.addChild(mark);
 			}
 		}
@@ -207,11 +205,11 @@
 		//****************//
 		// LINE FUNCTIONS //
 		//****************//
-		private function DrawLineFromMarkers(level:String)
+		private function DrawLineFromMarkers(level:String, colour:int)
 		{			
 			var line:Shape = this[level + "Line"];
 			
-			line.graphics.lineStyle(2);
+			line.graphics.lineStyle(2, colour);
 			line.graphics.moveTo(this[level + "Level1Mark"].x, this[level + "Level1Mark"].y);
 			
 			for (var i = 2; i <= 5; i++)

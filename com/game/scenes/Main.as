@@ -8,6 +8,7 @@
 	import com.game.factory.Game;
 	import com.game.elements.Raindrop;
 	import flash.events.Event;
+	import com.game.elements.ProgressMeter;
 	
 	
 	public class Main extends MovieClip {

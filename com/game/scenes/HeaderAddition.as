@@ -38,6 +38,7 @@
 			this.game.SetWaterLevelReachedMaxFunction(this.main.LoadAdditionFromMouseEvent);
 			this.SetLevel(1);
 			this.game.SetMaxWaterLevel(500);
+			this.game.AddProgressMeter(this.currentNumber, this.numberToMake);
 			this.game.StartRain();
 		}
 		
@@ -112,6 +113,8 @@
 		//**************//
 		private function CheckScores()
 		{
+			this.game.UpdateProgressMeter(this.currentNumber);
+			
 			if (this.currentNumber > this.numberToMake)
 			{
 				// Incorrect
@@ -153,7 +156,7 @@
 		public function SetLevel(level:Number)
 		{
 			this.levelNumber = level;
-			this.level_txt.text = "Level " + level + ":";
+			this.level_txt.text = "Level " + level;
 		}
 		
 		public function IncrementLevel()

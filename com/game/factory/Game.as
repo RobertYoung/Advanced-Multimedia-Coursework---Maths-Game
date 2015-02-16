@@ -17,12 +17,15 @@
 		var duration:Number = 8;
 		var rainTimer:Timer;
 		var raindropMinValue:Number = 10;
-		var raindropMaxValue:Number = 10;
+		var raindropMaxValue:Number = 12;
 		var scoreTimer:Timer;
 		
 		// Function variables
 		var updateScoresFunction:Function;
 		public var waterLevelReachedMaxFunction:Function;
+		
+		// Progress meter variables
+		private var progressMeter:ProgressMeter;
 		
 		public function Game(setMain:Main) {
 			this.main = setMain;
@@ -116,7 +119,7 @@
 			var point:Point = new Point();
 			
 			point.x = this.GenerateRandomNumber(50, 984);
-			point.y = this.GenerateRandomNumber(-30, -400);
+			point.y = this.GenerateRandomNumber(-50, -400);
 			
 			return point;
 		}
@@ -221,6 +224,21 @@
 		public function GetScoreTimer():int
 		{
 			return this.scoreTimer.currentCount;
+		}
+		
+		//**************************//
+		// PROGRESS METER FUNCTIONS //
+		//**************************//
+		public function AddProgressMeter(current:Number, numberToMake:Number)
+		{
+			progressMeter = new ProgressMeter(current, numberToMake);
+			
+			this.main.addChild(progressMeter);
+		}
+		
+		public function UpdateProgressMeter(current:Number)
+		{
+			progressMeter.SetCurrentNumber(current);
 		}
 	}
 }

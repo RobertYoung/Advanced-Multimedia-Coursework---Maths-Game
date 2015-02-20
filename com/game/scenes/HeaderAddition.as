@@ -41,7 +41,6 @@
 			this.game.SetMaxWaterLevel(500);
 			this.game.SetRaindropMinMaxValues(1, 40);
 			this.game.StartRain();
-			this.main.swfWater.CreateWaveTween();
 		}
 		
 		//**************************//

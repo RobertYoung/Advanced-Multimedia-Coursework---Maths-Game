@@ -57,7 +57,6 @@
 		//************//
 		private function GoToPlay()
 		{
-			trace("GO TO PLAY");
 			main.LoadPlay();
 		}
 		
@@ -66,7 +65,6 @@
 		//*************//
 		private function GoToStats()
 		{
-			trace("GO TO STATS");
 			main.LoadStats();
 		}
 		
@@ -75,7 +73,6 @@
 		//************//
 		private function GoToHelp()
 		{
-			trace("GO TO HELP");
 			main.LoadHelp();
 		}
 	}

@@ -36,6 +36,8 @@
 			game = main.game;
 			
 			this.waterFillDefaultY = this.waterFill_mc.y;
+			
+			this.CreateWaveTween();
 		}
 		
 		public function IncreaseWaterLevel()
@@ -68,7 +70,6 @@
 		
 		public function CreateWaveTween()
 		{
-			trace("Wave tween");
 			var bezier:Array = new Array();
 			
 			for (var i = 0; i < 1150; i += 20)

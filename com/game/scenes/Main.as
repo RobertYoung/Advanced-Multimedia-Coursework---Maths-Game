@@ -9,6 +9,8 @@
 	import com.game.elements.Raindrop;
 	import flash.events.Event;
 	import com.game.elements.ProgressMeter;
+	import com.game.elements.Wave;
+	import com.game.elements.Mark;
 	
 	
 	public class Main extends MovieClip {

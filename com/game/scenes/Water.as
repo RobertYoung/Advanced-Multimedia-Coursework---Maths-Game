@@ -4,6 +4,9 @@
 	import com.game.factory.Game;
 	import com.greensock.TweenMax;
 	import com.greensock.easing.*;
+	import com.greensock.TimelineMax;
+	import com.game.elements.Wave;
+	import com.game.elements.Mark;
 	
 	public class Water extends MovieClip {
 		
@@ -23,6 +26,7 @@
 		
 		public function Water() {
 			/* DO NOT PUT ANYTHING IN HERE */
+			this.CreateWaveTween();
 		}
 		
 		public function Init()
@@ -31,6 +35,8 @@
 			game = main.game;
 			
 			this.waterFillDefaultY = this.waterFill_mc.y;
+			
+			this.CreateWaveTween();
 		}
 		
 		public function IncreaseWaterLevel()
@@ -60,6 +66,36 @@
 			waterLevelTween = new TweenMax(this.waterLevel_mc, 1, { y: (this.waterLevel_mc.y + 60), ease: Quad.easeIn });
 			waterLevelTween.play();
 		}
+		
+		public function CreateWaveTween()
+		{
+			trace("Wave tween");
+			var bezier:Array = new Array();
+			
+			for (var i = 0; i < 1150; i += 20)
+			{
+				var nY = i % 12 == 0 ? 15 : 20;
+				var pos = { x: i, y: nY };
+				
+				bezier.push(pos);
+			}
+			
+			for (var o = 1; o <= 50; o++)
+			{
+				var wave:Wave = new Wave();
+				
+				wave.x = -50;
+				wave.y = 40;
+				
+				this.waterFill_mc.addChild(wave);
+				
+				var tween:TweenMax = new TweenMax(wave, 20, {  bezier: bezier,
+																repeat:-1, 
+																ease: Sine.easeInOut });
+				tween.delay(o * 0.8);
+				tween.seek(o * 0.4);
+				tween.play();
+			}
+		}
 	}
-	
 }

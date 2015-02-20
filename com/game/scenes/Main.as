@@ -6,7 +6,7 @@
 	import com.greensock.events.LoaderEvent;
 	import flash.events.MouseEvent;
 	import com.game.factory.Game;
-	import com.game.elements.Raindrop;
+	import com.game.elements.*;
 	import flash.events.Event;
 	import com.game.elements.ProgressMeter;
 	import com.game.elements.Wave;

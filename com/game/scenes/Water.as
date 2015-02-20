@@ -7,6 +7,8 @@
 	import com.greensock.TimelineMax;
 	import com.game.elements.Wave;
 	import com.game.elements.Mark;
+	import flash.geom.Point;
+	import com.game.elements.Raindrop;
 	
 	public class Water extends MovieClip {
 		
@@ -26,7 +28,6 @@
 		
 		public function Water() {
 			/* DO NOT PUT ANYTHING IN HERE */
-			this.CreateWaveTween();
 		}
 		
 		public function Init()
@@ -35,8 +36,6 @@
 			game = main.game;
 			
 			this.waterFillDefaultY = this.waterFill_mc.y;
-			
-			this.CreateWaveTween();
 		}
 		
 		public function IncreaseWaterLevel()
@@ -80,7 +79,7 @@
 				bezier.push(pos);
 			}
 			
-			for (var o = 1; o <= 50; o++)
+			for (var o = 1; o <= 40; o++)
 			{
 				var wave:Wave = new Wave();
 				
@@ -89,13 +88,13 @@
 				
 				this.waterFill_mc.addChild(wave);
 				
-				var tween:TweenMax = new TweenMax(wave, 20, {  bezier: bezier,
+				var tween:TweenMax = new TweenMax(wave, 25, {  bezier: bezier,
 																repeat:-1, 
 																ease: Sine.easeInOut });
 				tween.delay(o * 0.8);
-				tween.seek(o * 0.4);
+				tween.seek(o * 2.4);
 				tween.play();
 			}
 		}
-	}
+	}	
 }

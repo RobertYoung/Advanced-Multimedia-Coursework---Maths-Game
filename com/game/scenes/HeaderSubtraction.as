@@ -33,12 +33,12 @@
 		{
 			this.main = this.stage.getChildAt(0) as Main;
 			this.game = this.main.game;
+			this.game.AddProgressMeter(this.numberToMake, this.originalNumber);
 			this.SetRandomNumberToMake();
 			this.game.SetUpdateScoreFunction(this.SetCurrentNumber);
 			this.GenerateRandomCurrentNumber();
 			this.SetLevel(1);
 			this.game.SetMaxWaterLevel(500);
-			this.game.AddProgressMeter(this.numberToMake, this.originalNumber);
 			this.game.StartRain();
 		}
 		
@@ -50,8 +50,9 @@
 		
 		private function GenerateRandomCurrentNumber()
 		{
-			this.SetCurrentNumber(this.game.GenerateRandomNumber(20, 20), false);
+			this.SetCurrentNumber(this.game.GenerateRandomNumber(20, 300), false);
 			this.originalNumber = this.currentNumber;
+			this.game.SetNewNumberToMakeProgressMeter(this.originalNumber);
 		}
 		
 		private function SetCurrentNumber(setNumber:Number, animated:Boolean = true)
@@ -133,7 +134,6 @@
 		{
 			MathsSharedObject.getInstance().SetSubtractionLevelData(this.levelNumber, this.game.GetScoreTimer());
 			this.game.StartScoreTimer();
-			trace(MathsSharedObject.getInstance().GetSubtractionLevelData(this.levelNumber));
 		}
 		
 		//**************************//
@@ -148,6 +148,7 @@
 		{
 			this.numberToMake = setNumber;
 			this.numberToMake_txt.text = setNumber.toString();
+			this.game.SetNewCurrentNumberProgressMeter(this.numberToMake);
 		}
 		
 		//*****************//

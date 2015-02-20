@@ -240,5 +240,15 @@
 		{
 			progressMeter.SetCurrentNumber(current);
 		}
+		
+		public function SetNewNumberToMakeProgressMeter(number:Number)
+		{
+			progressMeter.SetNumberToMake(number, false);
+		}
+		
+		public function SetNewCurrentNumberProgressMeter(number:Number)
+		{
+			progressMeter.SetCurrentNumber(number, false);
+		}
 	}
 }

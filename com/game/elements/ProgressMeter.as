@@ -39,19 +39,23 @@
 		//**************************//
 		// CURRENT NUMBER FUNCTIONS //
 		//**************************//
-		public function SetCurrentNumber(current:Number)
+		public function SetCurrentNumber(current:Number, updateFill:Boolean = true)
 		{
 			this.currentNumber = current;
-			this.UpdateFill();
+			
+			if (updateFill)
+				this.UpdateFill();
 		}
 		
 		//**************************//
 		// NUMBER TO MAKE FUNCTIONS //
 		//**************************//
-		public function SetNumberToMake(toMake:Number)
+		public function SetNumberToMake(toMake:Number, updateFill:Boolean = true)
 		{
 			this.numberToMake = toMake;
-			this.UpdateFill();
+			
+			if (updateFill)
+				this.UpdateFill();
 		}
 		
 		//****************//
@@ -59,6 +63,7 @@
 		//****************//
 		private function UpdateFill()
 		{
+			trace("current: " + this.currentNumber + " to make: " + this.numberToMake);
 			var percentage:Number = (this.currentNumber / this.numberToMake);
 			var newX:Number = 360 * percentage;
 			

@@ -5,6 +5,9 @@
 	import flash.text.TextField;
 	import com.game.elements.IncorrectAlertview;
 	import com.game.factory.MathsSharedObject;
+	import com.greensock.TimelineMax;
+	import com.greensock.TweenMax;
+	import com.greensock.events.TweenEvent;
 	
 	public class HeaderDivide extends MovieClip {
 		
@@ -24,6 +27,9 @@
 		private var numberToMake:Number;
 		private var levelNumber:Number;
 		
+		// Tween variables
+		private var number1Tween:TimelineMax;
+		
 		public function HeaderDivide() {
 			/* DO NOT PUT ANYTHING IN HERE */
 		}
@@ -36,7 +42,7 @@
 			this.SetupDivision();
 			this.game.SetMaxWaterLevel(400);
 			this.game.SetUpdateScoreFunction(this.RaindropCaught);
-			this.game.SetRaindropMinMaxValues(10, 11);
+			this.game.SetRaindropMinMaxValues(1, 100);
 			this.SetLevel(1);
 			this.game.StartRain();
 		}
@@ -46,7 +52,7 @@
 		//*****************//
 		private function SetupDivision()
 		{
-			this.SetNumber1(0);
+			//this.SetNumber1(0);
 			this.SetRandomNumberToMake();
 			this.SetRandomNumber2();
 		}
@@ -67,7 +73,7 @@
 		
 		private function SetRandomNumberToMake()
 		{
-			this.SetNumberToMake(this.game.GenerateRandomNumber(1, 1));
+			this.SetNumberToMake(this.game.GenerateRandomNumber(1, 10));
 		}
 		
 		//********************//
@@ -76,12 +82,35 @@
 		private function SetNumber1(num:Number)
 		{
 			this.number1 = num;
+			this.number1_txt.alpha = 0;
 			this.number1_txt.text = num == 0 ? "" : num.toString();
+			
+			if (this.number1Tween == null)
+				this.number1Tween = new TimelineMax();
+			
+			this.number1Tween.append(new TweenMax(this.number1_txt, 1, { alpha: 1 }));
+			this.number1Tween.play();
 		}
 		
 		private function GetNumber1():Number
 		{
 			return parseInt(this.number1_txt.text);
+		}
+		
+		private function ResetNumber1()
+		{
+			if (this.number1Tween != null)
+			{
+				if (this.number1Tween.isActive())
+					this.number1Tween.call(this.ReverseNumber1Tween);
+				else
+					this.ReverseNumber1Tween();
+			}
+		}
+		
+		private function ReverseNumber1Tween()
+		{
+			this.number1Tween.reverse();
 		}
 		
 		//********************//
@@ -100,7 +129,7 @@
 		
 		private function SetRandomNumber2()
 		{
-			this.SetNumber2(this.game.GenerateRandomNumber(10, 10));
+			this.SetNumber2(this.game.GenerateRandomNumber(1, 10));
 		}
 		
 		//*****************//
@@ -122,7 +151,6 @@
 		{
 			MathsSharedObject.getInstance().SetDivisionLevelData(this.levelNumber, this.game.GetScoreTimer());
 			this.game.StartScoreTimer();
-			trace(MathsSharedObject.getInstance().GetDivisionLevelData(this.levelNumber));
 		}
 		
 		//*****************//
@@ -146,6 +174,7 @@
 					this.SetupDivision();
 					this.main.swfWater.ResetWaterLevel();
 					this.main.swfWater.DecreaseWaterLevel();
+					this.ResetNumber1();
 				}
 			}else{
 				// Incorrect

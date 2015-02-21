@@ -5,6 +5,7 @@
 	import com.greensock.TimelineMax;
 	import com.greensock.TweenMax;
 	import com.game.factory.AppearanceSettings;
+	import flash.geom.ColorTransform;
 	
 	public class BackButton extends MovieClip {
 		
@@ -21,6 +22,8 @@
 		public function Init()
 		{
 			backButton_mc.mouseChildren = false;
+
+			this.SetColour();
 			
 			this.tween = new TimelineMax({ name: "mainQueue" });
 			
@@ -52,6 +55,18 @@
 			this.backButton_mc.removeEventListener(MouseEvent.MOUSE_OUT, this.OnMouseOut);
 			this.backButton_mc.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
 			this.tween.reverse();
+		}
+		
+		//******************//
+		// COLOUR FUNCTIONS //
+		//******************//
+		private function SetColour()
+		{
+			var myColorTransform:ColorTransform = new ColorTransform();
+			myColorTransform.color = AppearanceSettings.DefaultColour();
+			
+			var bg:MovieClip = this.backButton_mc["background_mc"] as MovieClip;
+			bg.transform.colorTransform = myColorTransform;
 		}
 	}
 }

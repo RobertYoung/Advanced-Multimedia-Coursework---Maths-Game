@@ -22,6 +22,7 @@
 		private var displaySubtraction:Boolean = false;
 		private var displayMultiplication:Boolean = false;
 		private var displayDivision:Boolean = false;
+		private var displayMoney:Boolean = false;
 		
 		// Button tweens
 		private var additionTween:TweenMax;
@@ -53,6 +54,7 @@
 			this.subtraction_mc.addEventListener(MouseEvent.MOUSE_UP, this.ToggleSubtraction);
 			this.multiplication_mc.addEventListener(MouseEvent.MOUSE_UP, this.ToggleMultiplication);
 			this.division_mc.addEventListener(MouseEvent.MOUSE_UP, this.ToggleDivision);
+			this.money_mc.addEventListener(MouseEvent.MOUSE_UP, this.ToggleMoney)
 			
 			this.SetButtonColour("addition", Stats.ADDITION_COLOUR);
 			this.SetButtonColour("subtraction", Stats.SUBTRACTION_COLOUR);
@@ -192,6 +194,35 @@
 				this.HideDivisionStats();
 				this.displayDivision = false;
 				this.BevelTween("division");
+			}
+		}
+		
+		//*****************//
+		// MONEY FUNCTIONS //
+		//*****************//
+		private function DisplayMoneyStats()
+		{
+			this.graph_mc.DisplayMoneyStats();
+		}
+		
+		private function HideMoneyStats()
+		{
+			this.graph_mc.HideMoneyStats();
+		}
+	
+		private function ToggleMoney(e:Event)
+		{
+			if (this.displayMoney == false)
+			{
+				this.DisplayMoneyStats();
+				this.displayMoney = true;
+				
+				if (this.moneyTween != null)
+					this.moneyTween.reverse();
+			}else{
+				this.HideMoneyStats();
+				this.displayMoney = false;
+				this.BevelTween("money");
 			}
 		}
 		

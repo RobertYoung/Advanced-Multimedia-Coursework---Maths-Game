@@ -15,6 +15,7 @@
 	import com.game.elements.Coin;
 	import flash.utils.*;
 	import com.game.elements.*;
+	import com.game.factory.MathsSharedObject;
 	
 	public class Money extends MovieClip {
 
@@ -55,6 +56,9 @@
 		private var bottleTween:TimelineMax;
 		private var boxTween:TimelineMax;
 		
+		// Timer variables
+		private var timer:Timer;
+		
 		// Coin variables
 		public var coinArray:Array = new Array();
 		
@@ -71,6 +75,7 @@
 			this.submit_mc.addEventListener(MouseEvent.MOUSE_UP, CheckMoney);
 			
 			this.CreateProducts();
+			this.StartTimer();
 		}
 		
 		//***************//
@@ -303,6 +308,8 @@
 		{
 			if (this.amountOnCounter == this.numberToMake)
 			{
+				this.SaveScore();
+				
 				if (this.levelNumber == 5)
 				{
 					var correctAlertview:CompleteAlertview = new CompleteAlertview("You have bought all your items successfully!", this.main.LoadPlayFromMouseEvent);
@@ -347,6 +354,29 @@
 		private function ResetNumberToMake()
 		{
 			this.numberToMake = 0;
+		}
+		
+		//*****************//
+		// TIMER FUNCTIONS //
+		//*****************//
+		private function StartTimer()
+		{
+			this.timer = new Timer(10);
+			this.timer.start();
+		}
+		
+		private function GetTime():Number
+		{
+			return this.timer.currentCount / 100;
+		}
+		
+		//*****************//
+		// SCORE FUNCTIONS //
+		//*****************//
+		private function SaveScore()
+		{
+			MathsSharedObject.getInstance().SetMoneyLevelData(this.levelNumber, this.GetTime());
+			this.StartTimer();
 		}
 		
 		//*******************//

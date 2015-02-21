@@ -117,5 +117,22 @@
 		{
 			return this.sharedObject.data["division_level" + level];
 		}
+		
+		//*****************//
+		// MONEY FUNCTIONS //
+		//*****************//
+		public function SetMoneyLevelData(level:Number, time:Number)
+		{
+			if (time < this.GetMoneyLevelData(level) || isNaN(this.GetMoneyLevelData(level)))
+			{
+				this.sharedObject.data["money_level" + level] = time;
+				this.SaveData();
+			}
+		}
+		
+		public function GetMoneyLevelData(level:Number):Number
+		{
+			return this.sharedObject.data["money_level" + level];
+		}
 	}
 }

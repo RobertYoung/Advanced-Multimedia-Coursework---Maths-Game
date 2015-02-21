@@ -27,6 +27,7 @@
 		private var subtractionData:Array;
 		private var multiplicationData:Array;
 		private var divisionData:Array;
+		private var moneyData:Array;
 		
 		// Elements in movieclip
 		public var level1_mc:MovieClip;
@@ -73,6 +74,15 @@
 		private var divisionLevel5Mark:Mark;
 		private var divisionLine:Shape = new Shape();
 		private var divisionTween:TimelineMax = new TimelineMax();
+		
+		// Money mark variables
+		private var moneyLevel1Mark:Mark;
+		private var moneyLevel2Mark:Mark;
+		private var moneyLevel3Mark:Mark;
+		private var moneyLevel4Mark:Mark;
+		private var moneyLevel5Mark:Mark;
+		private var moneyLine:Shape = new Shape();
+		private var moneyTween:TimelineMax = new TimelineMax();
 		
 		public function MathsGraph() {
 			this.mathsData = MathsSharedObject.getInstance();
@@ -121,6 +131,14 @@
 			for (var div = 1; div <= 5; div++)
 			{
 				this.divisionData.push(this.mathsData.GetDivisionLevelData(div));
+			}
+			
+			this.moneyData = new Array();
+			
+			// Get money
+			for (var mon = 1; mon <= 5; mon++)
+			{
+				this.moneyData.push(this.mathsData.GetMoneyLevelData(mon));
 			}
 		}
 		
@@ -182,6 +200,21 @@
 		{
 			this.HideMarkers("division");
 			this.HideLineFromMarkers("division");
+		}
+		
+		//*****************//
+		// MONEY FUNCTIONS //
+		//*****************//
+		public function DisplayMoneyStats()
+		{
+			this.moneyTween = new TimelineMax();
+			this.DisplayMarkers("money", Stats.MONEY_COLOUR);
+		}
+		
+		public function HideMoneyStats()
+		{
+			this.HideMarkers("money");
+			this.HideLineFromMarkers("money");
 		}
 		
 		//******************//

@@ -4,6 +4,7 @@
 	import flash.events.MouseEvent;
 	import com.game.factory.AppearanceSettings;
 	import com.greensock.TimelineMax;
+	import flash.geom.ColorTransform;
 	
 	public class Play extends MovieClip {
 		
@@ -55,6 +56,12 @@
 			this.multiplication_mc.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
 			this.division_mc.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
 			this.money_mc.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
+			
+			this.SetColour(this.addition_mc);
+			this.SetColour(this.subtraction_mc);
+			this.SetColour(this.multiplication_mc);
+			this.SetColour(this.division_mc);
+			this.SetColour(this.money_mc);
 		}
 		
 		//***********************//
@@ -82,6 +89,18 @@
 			button.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
 			
 			tween.reverse();
+		}
+		
+		//******************//
+		// COLOUR FUNCTIONS //
+		//******************//
+		private function SetColour(button:MovieClip)
+		{
+			var myColorTransform:ColorTransform = new ColorTransform();
+			myColorTransform.color = AppearanceSettings.DefaultColour();
+			
+			var bg:MovieClip = button["button_mc"]["background_mc"] as MovieClip;
+			bg.transform.colorTransform = myColorTransform;
 		}
 	}
 }

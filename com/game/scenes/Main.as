@@ -205,8 +205,8 @@
 			
 			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadAdditionComplete });
 		
-			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
 			loader.append(new SWFLoader(Main.SWF_HEADER_ADDITION + ".swf", { name: Main.SWF_HEADER_ADDITION, container: this }));
+			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
 			loader.append(new SWFLoader(Main.SWF_WATER + ".swf", { name: Main.SWF_WATER, container: this }));
 			loader.append(new SWFLoader(Main.SWF_BUCKET + ".swf", { name: Main.SWF_BUCKET, container: this }));
 			loader.load();
@@ -243,8 +243,8 @@
 			
 			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadSubtractionComplete });
 		
-			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
 			loader.append(new SWFLoader(Main.SWF_HEADER_SUBTRACTION + ".swf", { name: Main.SWF_HEADER_SUBTRACTION, container: this }));
+			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
 			loader.append(new SWFLoader(Main.SWF_WATER + ".swf", { name: Main.SWF_WATER, container: this }));
 			loader.append(new SWFLoader(Main.SWF_BUCKET + ".swf", { name: Main.SWF_BUCKET, container: this }));
 			loader.load();
@@ -281,8 +281,8 @@
 			
 			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadMultiplicationComplete });
 		
-			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
 			loader.append(new SWFLoader(Main.SWF_HEADER_MULTIPLICATION + ".swf", { name: Main.SWF_HEADER_MULTIPLICATION, container: this }));
+			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
 			loader.append(new SWFLoader(Main.SWF_WATER + ".swf", { name: Main.SWF_WATER, container: this }));
 			loader.append(new SWFLoader(Main.SWF_BUCKET + ".swf", { name: Main.SWF_BUCKET, container: this }));
 			loader.load();
@@ -319,8 +319,8 @@
 			
 			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadDivideComplete });
 		
-			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
 			loader.append(new SWFLoader(Main.SWF_HEADER_DIVIDE + ".swf", { name: Main.SWF_HEADER_DIVIDE, container: this }));
+			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
 			loader.append(new SWFLoader(Main.SWF_WATER + ".swf", { name: Main.SWF_WATER, container: this }));
 			loader.append(new SWFLoader(Main.SWF_BUCKET + ".swf", { name: Main.SWF_BUCKET, container: this }));
 			loader.load();

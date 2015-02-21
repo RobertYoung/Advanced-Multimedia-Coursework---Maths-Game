@@ -2,7 +2,8 @@
 	
 	import flash.display.MovieClip;
 	import flash.events.MouseEvent;
-	
+	import com.game.factory.AppearanceSettings;
+	import com.greensock.TimelineMax;
 	
 	public class Play extends MovieClip {
 		
@@ -12,6 +13,13 @@
 		public var multiplication_mc:MovieClip;
 		public var division_mc:MovieClip;
 		public var money_mc:MovieClip;
+		
+		// Tween variables
+		private var addition_mcTween:TimelineMax;
+		private var subtraction_mcTween:TimelineMax;
+		private var multiplication_mcTween:TimelineMax;
+		private var division_mcTween:TimelineMax;
+		private var money_mcTween:TimelineMax;
 		
 		// Game variables
 		private var main:Main;
@@ -24,6 +32,12 @@
 		{
 			this.main = this.stage.getChildAt(0) as Main;
 			
+			this.addition_mcTween = new TimelineMax({ name: "mainQueue" });
+			this.subtraction_mcTween = new TimelineMax({ name: "mainQueue" });
+			this.multiplication_mcTween = new TimelineMax({ name: "mainQueue" });
+			this.division_mcTween = new TimelineMax({ name: "mainQueue" });
+			this.money_mcTween = new TimelineMax({ name: "mainQueue" });
+			
 			this.addition_mc.mouseChildren = false;
 			this.subtraction_mc.mouseChildren = false;
 			this.multiplication_mc.mouseChildren = false;
@@ -35,7 +49,39 @@
 			this.multiplication_mc.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadMultiplicationFromMouseEvent);
 			this.division_mc.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadDivideFromMouseEvent);
 			this.money_mc.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadMoneyFromMouseEvent);
+			
+			this.addition_mc.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
+			this.subtraction_mc.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
+			this.multiplication_mc.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
+			this.division_mc.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
+			this.money_mc.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
+		}
+		
+		//***********************//
+		// MOUSE EVENT FUNCTIONS //
+		//***********************//
+		private function OnMouseOver(e:MouseEvent)
+		{
+			var button:MovieClip = e.target as MovieClip;
+			var tween:TimelineMax = this[button.name + "Tween"] as TimelineMax;
+			
+			button.removeEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
+			button.addEventListener(MouseEvent.MOUSE_OUT, this.OnMouseOut);
+			
+			tween.append(AppearanceSettings.ButtonTween(button));
+			
+			tween.play();
+		}
+		
+		private function OnMouseOut(e:MouseEvent)
+		{
+			var button:MovieClip = e.target as MovieClip;
+			var tween:TimelineMax = this[button.name + "Tween"] as TimelineMax;
+			
+			button.removeEventListener(MouseEvent.MOUSE_OUT, this.OnMouseOut);
+			button.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
+			
+			tween.reverse();
 		}
 	}
-	
 }

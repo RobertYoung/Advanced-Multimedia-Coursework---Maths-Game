@@ -48,7 +48,7 @@
 			this.removeEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
 			this.addEventListener(MouseEvent.MOUSE_OUT, this.OnMouseOut);
 			
-			this.tween.append(new TweenMax(this, 0.4, {glowFilter:{color:0x000000, alpha:1, blurX:30, blurY:30}, scaleX: 1.05, scaleY: 1.05 }));
+			this.tween.append(AppearanceSettings.ButtonTween(this));
 			this.tween.play();
 		}
 		

@@ -54,7 +54,7 @@
 		private function SetNumberToMake(setNumber:Number)
 		{
 			this.numberToMake = setNumber;
-			this.numberToMake_txt.text = setNumber.toString();;
+			this.numberToMake_txt.text = setNumber.toString();
 			this.game.SetNewNumberToMakeProgressMeter(setNumber);
 		}
 		

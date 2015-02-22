@@ -38,6 +38,7 @@
 			this.game.SetUpdateScoreFunction(this.SetCurrentNumber);
 			this.GenerateRandomCurrentNumber();
 			this.SetLevel(1);
+			this.game.SetRaindropMinMaxValues(1, 20);
 			this.game.SetMaxWaterLevel(500);
 			this.game.StartRain();
 		}

@@ -58,6 +58,11 @@
 		public static const ELEMENT_COMPLETE_ALERTVIEW:String = "complete_alertview";
 		public static const ELEMENT_RAINDROP:String = "raindrop";
 		
+		//***********************//
+		// ELEMENTS IN SWF FILES //
+		//***********************//
+		public var background_mc:TileBackground;
+		
 		//*********//
 		// LOADING //
 		//*********//
@@ -404,6 +409,9 @@
 					
 					raindrop.tween.kill();
 				}
+				
+				if (this.getChildAt(i).name == "background_mc")
+					continue;
 
  				this.removeChildAt(i); 
  			}
@@ -422,6 +430,19 @@
 					}
 				}
 			}
+		}
+		
+		//**********************//
+		// BACKGROUND FUNCTIONS //
+		//**********************//
+		private function ShowBackground()
+		{
+			this.background_mc.visible = true;
+		}
+		
+		private function HideBackground()
+		{
+			this.background_mc.visible = false;
 		}
 	}
 	

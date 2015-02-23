@@ -44,6 +44,8 @@
 			this.exit_btn.mouseChildren = false;
 			
 			this.exit_btn.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadPlayFromMouseEvent);
+			
+			this.main.BringCursorToFront();
 		}
 		
 		//*****************//

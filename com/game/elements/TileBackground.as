@@ -86,7 +86,6 @@
 			
 			for (var i = 1; i <= 30; i++)
 			{
-				trace(i);
 				var tile:MovieClip = this["tilePane" + i + "_mc"] as MovieClip;
 				var tween:TimelineMax = this[tile.name + "Tween"] as TimelineMax;
 				

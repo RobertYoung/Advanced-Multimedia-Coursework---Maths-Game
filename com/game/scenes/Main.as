@@ -11,7 +11,7 @@
 	import com.game.elements.ProgressMeter;
 	import com.game.elements.Wave;
 	import com.game.elements.Mark;
-	
+	import flash.ui.*;
 	
 	public class Main extends MovieClip {
 
@@ -32,6 +32,7 @@
 		public static const SWF_MONEY:String = "money";
 		public static const SWF_BUCKET:String = "bucket";
 		public static const SWF_WATER:String = "water";
+		public static const SWF_CURSOR:String = "cursor";
 		
 		//***************//
 		// SWF VARIABLES //
@@ -50,6 +51,7 @@
 		public var swfMoney:Money;
 		public var swfBucket:Bucket;
 		public var swfWater:Water;
+		public var swfCursor:Cursor;
 		
 		//***************//
 		// GAME ELEMENTS //
@@ -75,6 +77,7 @@
 		
 		public function Main() {
 			this.LoadMenu();
+			this.LoadCursor();
 		}
 		
 		//***********//
@@ -131,6 +134,7 @@
 			this.swfPlay.Init();
 			
 			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadMenuFromMouseEvent);
+			this.BringCursorToFront();
 		}
 		
 		public function LoadPlayFromMouseEvent(e:MouseEvent)
@@ -161,6 +165,7 @@
 			this.swfStats.Init();
 			
 			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadMenuFromMouseEvent);
+			this.BringCursorToFront();
 		}
 		
 		public function LoadStatsFromMouseEvent(e:MouseEvent)
@@ -194,6 +199,7 @@
 			this.swfHelp.Init();
 			
 			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadMenuFromMouseEvent);
+			this.BringCursorToFront();
 		}
 		
 		public function LoadHelpFromMouseEvent(e:MouseEvent)
@@ -232,6 +238,7 @@
 			this.swfBucket.Init();
 			
 			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadPlayFromMouseEvent);
+			this.BringCursorToFront();
 		}
 		
 		public function LoadAdditionFromMouseEvent(e:MouseEvent)
@@ -270,6 +277,7 @@
 			this.swfBucket.Init();
 			
 			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadPlayFromMouseEvent);
+			this.BringCursorToFront();
 		}
 		
 		public function LoadSubtractionFromMouseEvent(e:MouseEvent)
@@ -308,6 +316,7 @@
 			this.swfBucket.Init();
 			
 			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadPlayFromMouseEvent);
+			this.BringCursorToFront();
 		}
 		
 		public function LoadMultiplicationFromMouseEvent(e:MouseEvent)
@@ -346,6 +355,7 @@
 			this.swfBucket.Init();
 			
 			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadPlayFromMouseEvent);
+			this.BringCursorToFront();
 		}
 		
 		public function LoadDivideFromMouseEvent(e:MouseEvent)
@@ -378,11 +388,40 @@
 			this.swfMoney.Init();
 			
 			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadPlayFromMouseEvent);
+			this.BringCursorToFront();
 		}
 		
 		public function LoadMoneyFromMouseEvent(e:MouseEvent)
 		{
 			this.LoadMoney();
+		}
+		
+		//******************//
+		// CURSOR FUNCTIONS //
+		//******************//
+		private function LoadCursor()
+		{
+			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadCursorComplete });
+		
+			loader.append(new SWFLoader(Main.SWF_CURSOR + ".swf", { name: Main.SWF_CURSOR, container: this }));
+			loader.load();
+		}
+		
+		private function LoadCursorComplete(e:LoaderEvent)
+		{
+			this.swfCursor = LoaderMax.getContent(Main.SWF_CURSOR).rawContent as Cursor;
+		
+			this.swfCursor.Init();
+		}
+		
+		private function LoadCursorFromMouseEvent(e:MouseEvent)
+		{
+			this.LoadCursor();
+		}
+		
+		public function BringCursorToFront()
+		{
+			this.setChildIndex(this.swfCursor.parent, this.numChildren - 1);
 		}
 		
 		//****************//
@@ -411,6 +450,12 @@
 				}
 				
 				if (this.getChildAt(i).name == "background_mc")
+					continue;
+				
+				if (this.getChildAt(i).name == "cursor_mc")
+					continue;
+				
+				if (this.getChildAt(i).name == Main.SWF_CURSOR)
 					continue;
 
  				this.removeChildAt(i); 
@@ -445,5 +490,4 @@
 			this.background_mc.visible = false;
 		}
 	}
-	
 }

@@ -101,6 +101,8 @@
 			
 			this.swfMenu.Init();
 			this.swfLogo.Init();
+			
+			this.BringCursorToFront();
 		}
 		
 		public function LoadMenuFromMouseEvent(e:MouseEvent)
@@ -371,9 +373,9 @@
 			this.RemoveAllFromStage();
 			
 			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadMoneyComplete });
-		
-			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
+	
 			loader.append(new SWFLoader(Main.SWF_MONEY + ".swf", { name: Main.SWF_MONEY, container: this }));
+			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
 			loader.load();
 		}
 		

@@ -39,7 +39,7 @@
 			this.game.SetWaterLevelReachedMaxFunction(this.main.LoadAdditionFromMouseEvent);
 			this.SetLevel(1);
 			this.game.SetMaxWaterLevel(500);
-			this.game.SetRaindropMinMaxValues(1, 40);
+			this.game.SetRaindropMinMaxValues(10, 11);
 			this.game.StartRain();
 		}
 		
@@ -60,16 +60,32 @@
 		
 		private function SetRandomNumberToMake()
 		{
-			this.SetNumberToMake(this.game.GenerateRandomNumber(30, 300));
+			this.SetNumberToMake(this.game.GenerateRandomNumber(20, 20));
 		}
 		
 		//**************************//
 		// CURRENT NUMBER FUNCTIONS //
 		//**************************//
+		private var numbersToUpdate:Array;
 		private var updateNumbers:Array;
 		private var updateNumberTimer:Timer;
 		
 		private function SetCurrentNumber(setNumber:Number, animated:Boolean = true)
+		{
+			if (this.updateNumberTimer != null && this.updateNumberTimer.running)
+			{
+				if (this.numbersToUpdate == null)
+					this.numbersToUpdate = new Array();
+
+				this.numbersToUpdate.push(setNumber);
+				
+				return;
+			}
+			
+			this.AddCurrentNumber(setNumber, animated);
+		}
+		
+		private function AddCurrentNumber(setNumber:Number, animated:Boolean)
 		{
 			this.currentNumber = this.GetCurrentNumber();
 			
@@ -102,6 +118,13 @@
 			}else{
 				this.updateNumberTimer.stop();
 				this.CheckScores();
+				
+				if (this.numbersToUpdate != null && this.numbersToUpdate.length > 0)
+				{
+					this.AddCurrentNumber(this.numbersToUpdate[0], true);
+					
+					this.numbersToUpdate.shift();
+				}
 			}
 		}
 		

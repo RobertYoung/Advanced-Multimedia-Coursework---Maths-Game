@@ -145,7 +145,7 @@
 			this.stopDrag();
 			this.RemoveStopDragFromCounter();
 			
-			if (this.dropTarget == null)
+			if (this.dropTarget.parent.name != Money.ELEMENT_COUNTER)
 			{
 				this.DeleteMoney();
 				this.main.swfMoney.DecreaseAmountOnCounter(this.value);
@@ -188,6 +188,7 @@
 			newMoney.scaleZ = this.scaleZ;
 
 			this.main.addChild(newMoney);
+			this.main.BringCursorToFront();
 		}
 		
 		private function DeleteMoney()

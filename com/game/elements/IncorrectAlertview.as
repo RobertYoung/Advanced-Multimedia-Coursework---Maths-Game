@@ -6,6 +6,7 @@
 	import com.game.scenes.Main;
 	import flash.events.MouseEvent;
 	import com.game.factory.Game;
+	import com.greensock.TweenMax;
 	
 	
 	public class IncorrectAlertview extends MovieClip {
@@ -19,6 +20,10 @@
 		public var description_txt:TextField;
 		public var ok_btn:MovieClip;
 		public var exit_btn:MovieClip;
+		
+		// Tween variables
+		private var ok_btnTween:TweenMax;
+		private var exit_btnTween:TweenMax;
 		
 		public function IncorrectAlertview(title:String, description:String, okFunction:Function) {
 			this.SetTitle(title);
@@ -43,6 +48,10 @@
 			this.ok_btn.mouseChildren = false;
 			this.exit_btn.mouseChildren = false;
 			
+			this.ok_btn.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
+			this.ok_btn.addEventListener(MouseEvent.MOUSE_OUT, this.OnMouseOut);
+			this.exit_btn.addEventListener(MouseEvent.MOUSE_OVER, this.OnMouseOver);
+			this.exit_btn.addEventListener(MouseEvent.MOUSE_OUT, this.OnMouseOut);
 			this.exit_btn.addEventListener(MouseEvent.MOUSE_UP, this.main.LoadPlayFromMouseEvent);
 			
 			this.main.BringCursorToFront();
@@ -71,6 +80,28 @@
 		{
 			this.ok_btn.addEventListener(MouseEvent.MOUSE_UP, setFunction);
 		}
+		
+		//*****************//
+		// TWEEN FUNCTIONS //
+		//*****************//
+		private function OnMouseOver(e:MouseEvent)
+		{
+			var tween:TweenMax = this[e.target.name + "Tween"] as TweenMax;
+			
+			if (tween == null)
+			{
+				tween = new TweenMax(e.target, 0.4, { glowFilter: {color:0x000000, alpha:1, blurX:20, blurY:20, strength:1}});
+			}
+			
+			tween.play();
+			this[e.target.name + "Tween"] = tween;
+		}
+		
+		private function OnMouseOut(e:MouseEvent)
+		{
+			var tween:TweenMax = this[e.target.name + "Tween"] as TweenMax;
+			//trace(e.target.name + "Tween");
+			tween.reverse();
+		}
 	}
-	
 }

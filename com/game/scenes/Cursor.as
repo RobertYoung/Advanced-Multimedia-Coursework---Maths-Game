@@ -34,6 +34,7 @@
 		//******************//
 		private function SetupCursor()
 		{
+			this.main.stage.addEventListener(Event.MOUSE_LEAVE, CursorRollOut, false, 0, true);
 			this.main.stage.addEventListener(MouseEvent.MOUSE_OUT , CursorRollOut, false, 0, true);
 			this.main.stage.addEventListener(MouseEvent.MOUSE_OVER, CursorRollOver, false, 0, true);
 			this.main.stage.addEventListener(MouseEvent.MOUSE_MOVE, CursorMove, false, 0, true);
@@ -49,13 +50,13 @@
 		private function CursorRollOut(e:Event)
 		{
 			this.cursor_mc.visible = false;
-			Mouse.show();
+			//Mouse.show();
 		}
 		
 		private function CursorRollOver(e:MouseEvent)
 		{
 			this.cursor_mc.visible = true;
-			Mouse.hide();
+			//Mouse.hide();
 		}
 		
 		private function CursorMove(e:MouseEvent)

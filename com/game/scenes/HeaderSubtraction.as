@@ -46,6 +46,7 @@
 		//**************************//
 		// CURRENT NUMBER FUNCTIONS //
 		//**************************//
+		private var numbersToUpdate:Array;
 		private var updateNumbers:Array;
 		private var updateNumberTimer:Timer;
 		
@@ -57,6 +58,21 @@
 		}
 		
 		private function SetCurrentNumber(setNumber:Number, animated:Boolean = true)
+		{
+			if (this.updateNumberTimer != null && this.updateNumberTimer.running)
+			{
+				if (this.numbersToUpdate == null)
+					this.numbersToUpdate = new Array();
+
+				this.numbersToUpdate.push(setNumber);
+				
+				return;
+			}
+			
+			this.AddCurrentNumber(setNumber, animated);
+		}
+		
+		private function AddCurrentNumber(setNumber:Number, animated:Boolean)
 		{
 			this.currentNumber = this.GetCurrentNumber();
 			

@@ -414,6 +414,7 @@
 			this.swfCursor = LoaderMax.getContent(Main.SWF_CURSOR).rawContent as Cursor;
 		
 			this.swfCursor.Init();
+			this.BringCursorToFront();
 		}
 		
 		private function LoadCursorFromMouseEvent(e:MouseEvent)
@@ -423,7 +424,8 @@
 		
 		public function BringCursorToFront()
 		{
-			this.setChildIndex(this.swfCursor.parent, this.numChildren - 1);
+			if (this.swfCursor != null)
+				this.setChildIndex(this.swfCursor.parent, this.numChildren - 1);
 		}
 		
 		//****************//

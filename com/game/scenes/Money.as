@@ -205,16 +205,16 @@
 			switch (this.levelNumber)
 			{
 				case 1:
-					numberOfProducts = 3;
+					numberOfProducts = 1;
 				break;
 				case 2:
-					numberOfProducts = 1;
+					numberOfProducts = 2;
 				break;
 				case 3:
 					numberOfProducts = 2;
 				break;
 				case 4:
-					numberOfProducts = 2;
+					numberOfProducts = 3;
 				break;
 				case 5:
 					numberOfProducts = 3;

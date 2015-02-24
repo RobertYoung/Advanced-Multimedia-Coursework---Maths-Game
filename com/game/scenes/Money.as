@@ -98,7 +98,7 @@
 		private function ShowCan()
 		{
 			this.canTween = new TimelineMax();
-			this.canTween.append(new TweenMax(this.can, 1, { x: 790, onReverseComplete: this.RemoveCan } ));
+			this.canTween.append(new TweenMax(this.can, 1, { x: 700, onReverseComplete: this.RemoveCan } ));
 			this.canTween.play();
 		}
 		
@@ -134,7 +134,7 @@
 		private function ShowBottle()
 		{
 			this.bottleTween = new TimelineMax();
-			this.bottleTween.append(new TweenMax(this.bottle, 1, { x: 956, onReverseComplete: this.RemoveBottle } ));
+			this.bottleTween.append(new TweenMax(this.bottle, 1, { x: 900, onReverseComplete: this.RemoveBottle } ));
 			this.bottleTween.play();
 		}
 		
@@ -158,7 +158,7 @@
 			this.box = new Box();
 			
 			this.box.x = 1500;
-			this.box.y = 655;
+			this.box.y = 700;
 			this.box.name = Money.ELEMENT_BOX
 			this.SetPrice(this.box);
 			
@@ -170,7 +170,7 @@
 		private function ShowBox()
 		{
 			this.boxTween = new TimelineMax();
-			this.boxTween.append(new TweenMax(this.box, 1, { x: 780, onReverseComplete: this.RemoveBox } ));
+			this.boxTween.append(new TweenMax(this.box, 1, { x: 660, onReverseComplete: this.RemoveBox } ));
 			this.boxTween.play();
 		}
 		
@@ -205,7 +205,7 @@
 			switch (this.levelNumber)
 			{
 				case 1:
-					numberOfProducts = 1;
+					numberOfProducts = 3;
 				break;
 				case 2:
 					numberOfProducts = 1;

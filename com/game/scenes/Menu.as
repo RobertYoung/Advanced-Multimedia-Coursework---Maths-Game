@@ -5,6 +5,7 @@
 	import com.game.buttons.ButtonStats;
 	import com.game.buttons.ButtonHelp;
 	import flash.events.MouseEvent;
+	import com.game.buttons.ButtonScores;
 	
 	
 	public class Menu extends MovieClip {
@@ -16,6 +17,7 @@
 		public var play_mc:ButtonPlay;
 		public var stats_mc:ButtonStats;
 		public var help_mc:ButtonHelp;
+		public var scores_mc:ButtonScores;
 		
 		public function Menu() {
 			/* DO NOT PUT ANYTHING IN HERE */
@@ -28,10 +30,12 @@
 			this.play_mc.mouseChildren = false;
 			this.stats_mc.mouseChildren = false;
 			this.help_mc.mouseChildren = false;
+			this.scores_mc.mouseChildren = false;
 			
 			this.play_mc.addEventListener(MouseEvent.MOUSE_UP, PlayMouseUp);
 			this.stats_mc.addEventListener(MouseEvent.MOUSE_UP, StatsMouseUp);
 			this.help_mc.addEventListener(MouseEvent.MOUSE_UP, HelpMouseUp);
+			this.scores_mc.addEventListener(MouseEvent.MOUSE_UP, ScoresMouseUp);
 		}
 		
 		//**************//
@@ -50,6 +54,11 @@
 		private function HelpMouseUp(e:MouseEvent)
 		{
 			this.GoToHelp();
+		}
+		
+		private function ScoresMouseUp(e:MouseEvent)
+		{
+			this.GoToScores();
 		}
 		
 		//************//
@@ -74,6 +83,14 @@
 		private function GoToHelp()
 		{
 			main.LoadHelp();
+		}
+		
+		//**************//
+		// GO TO SCORES //
+		//**************//
+		private function GoToScores()
+		{
+			main.LoadScores();
 		}
 	}
 	

@@ -67,6 +67,24 @@
 			return this.sharedObject.data["addition_level" + level];
 		}
 		
+		public function GetAdditionalTotalTimeTaken():Number
+		{
+			var total:Number = 0;
+			var index:Number = 1;
+			var levelTime:Number;
+			
+			levelTime = this.GetAdditionLevelData(index);
+			
+			while (!isNaN(levelTime))
+			{
+				total += levelTime;
+				index++;
+				levelTime = this.GetAdditionLevelData(index);
+			}
+			
+			return total;
+		}
+		
 		//***********************//
 		// SUBTRACTION FUNCTIONS //
 		//***********************//

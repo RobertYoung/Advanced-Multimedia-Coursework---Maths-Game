@@ -80,9 +80,9 @@
 			this.FadeAllRaindrops();
 		}
 
-		public function GameComplete(level:String, okFunction:Function)
+		public function GameComplete(level:String, okFunction:Function, time:Number = 0)
 		{
-			var alertview:CompleteAlertview = new CompleteAlertview("You have successfully completed all the " + level + " levels", okFunction);
+			var alertview:CompleteAlertview = new CompleteAlertview("You have successfully completed all the " + level + " levels", okFunction, level, time);
 			
 			this.main.addChild(alertview);
 		}

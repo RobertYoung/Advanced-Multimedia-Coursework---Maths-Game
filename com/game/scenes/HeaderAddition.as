@@ -39,7 +39,7 @@
 			this.game.SetWaterLevelReachedMaxFunction(this.main.LoadAdditionFromMouseEvent);
 			this.SetLevel(1);
 			this.game.SetMaxWaterLevel(500);
-			this.game.SetRaindropMinMaxValues(1, 30);
+			this.game.SetRaindropMinMaxValues(10, 11);
 			this.game.StartRain();
 		}
 		
@@ -60,7 +60,7 @@
 		
 		private function SetRandomNumberToMake()
 		{
-			this.SetNumberToMake(this.game.GenerateRandomNumber(20, 300));
+			this.SetNumberToMake(this.game.GenerateRandomNumber(20, 20));
 		}
 		
 		//**************************//
@@ -153,10 +153,10 @@
 				this.SaveScore();
 				
 				// Correct
-				if (this.levelNumber == 5)
+				if (this.levelNumber == 1)
 				{
 					this.game.SetGameComplete();
-					this.game.GameComplete("addition", this.main.LoadPlayFromMouseEvent);
+					this.game.GameComplete("addition", this.main.LoadPlayFromMouseEvent, this.GetTotalTimeTaken());
 				}else{
 					this.IncrementLevel();
 					this.SetNumberToMake(0);
@@ -172,6 +172,11 @@
 		{
 			MathsSharedObject.getInstance().SetAdditionLevelData(this.levelNumber, this.game.GetScoreTimer());
 			this.game.StartScoreTimer();
+		}
+		
+		private function GetTotalTimeTaken():Number
+		{
+			return MathsSharedObject.getInstance().GetAdditionalTotalTimeTaken();
 		}
 		
 		//*****************//

@@ -7,24 +7,36 @@
 	import flash.events.MouseEvent;
 	import com.greensock.TimelineMax;
 	import com.greensock.TweenMax;
+	import com.game.factory.MathsWebService;
 	
 	public class CompleteAlertview extends MovieClip {
 		
 		// Elements on alertview
 		public var description_txt:TextField;
 		public var next_btn:MovieClip;
+		public var name_txt:TextField;
+		public var save_mc:MovieClip;
 		
 		// Game variables
 		private var main:Main;
+
+		// Score variables
+		private var levelName:String;
+		private var totalScore:Number;
 		
 		// Tween variables
 		private var nextTween:TimelineMax;
+		private var saveTween:TimelineMax;
 		
-		public function CompleteAlertview(setDescription:String, setNextButtonFunction:Function) {
+		public function CompleteAlertview(setDescription:String, setNextButtonFunction:Function, setLevelName:String = "", setTotalScore:Number = 0) {
 			this.SetDescription(setDescription);
 			this.SetNextButtonFunction(setNextButtonFunction);
 			
+			this.levelName = setLevelName;
+			this.totalScore = setTotalScore;
+			
 			this.addEventListener(Event.ADDED_TO_STAGE, AddedToStage);
+			this.save_mc.addEventListener(MouseEvent.MOUSE_UP, this.SaveScore);
 		}
 		
 		//****************//
@@ -37,7 +49,7 @@
 			this.y = this.stage.stageHeight / 2;
 			this.name = Main.ELEMENT_COMPLETE_ALERTVIEW;
 			this.main.BringCursorToFront();
-			this.NextButtonTween();
+			this.ButtonTweens();
 		}
 		
 		//***********************//
@@ -56,7 +68,7 @@
 			this.next_btn.addEventListener(MouseEvent.MOUSE_UP, setFunction);
 		}
 		
-		private function NextButtonTween()
+		private function ButtonTweens()
 		{
 			if (this.nextTween == null)
 			{
@@ -66,6 +78,27 @@
 				this.nextTween.yoyo(true);
 				this.nextTween.play();
 			}
+			
+			if (this.saveTween == null)
+			{
+				this.saveTween = new TimelineMax();
+				this.saveTween.append(new TweenMax(this.save_mc, 1, {glowFilter: {color:0x000000, alpha:1, blurX:20, blurY:20, strength:1}}));
+				this.saveTween.repeat(-1);
+				this.saveTween.yoyo(true);
+				this.saveTween.play();
+			}
+		}
+		
+		//***********************//
+		// SAVE BUTTON FUNCTIONS //
+		//***********************//
+		public function SaveScore(e:MouseEvent)
+		{
+			trace("level: " + this.levelName, " score: " + this.totalScore + " name: " + this.name_txt.text);
+			
+			var webService:MathsWebService = new MathsWebService();
+			
+			webService.SaveScore(this.levelName, this.totalScore, this.name_txt.text);
 		}
 	}
 }

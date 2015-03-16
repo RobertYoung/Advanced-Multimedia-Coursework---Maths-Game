@@ -24,6 +24,7 @@
 		public static const SWF_MENU:String = "menu";
 		public static const SWF_PLAY:String = "play";
 		public static const SWF_STATS:String = "stats";
+		public static const SWF_SCORES:String = "scores";
 		public static const SWF_HELP:String = "help";
 		public static const SWF_HEADER_ADDITION:String = "header_addition";
 		public static const SWF_HEADER_SUBTRACTION:String = "header_subtraction";
@@ -43,6 +44,7 @@
 		public var swfMenu:Menu;
 		public var swfPlay:Play;
 		public var swfStats:Stats;
+		public var swfScores:Scores;
 		public var swfHelp:Help;
 		public var swfHeaderAddition:HeaderAddition;
 		public var swfHeaderSubtraction:HeaderSubtraction;
@@ -173,6 +175,37 @@
 		public function LoadStatsFromMouseEvent(e:MouseEvent)
 		{
 			this.LoadStats();
+		}
+		
+		//*************//
+		// LOAD SCORES //
+		//*************//
+		public function LoadScores()
+		{
+			this.RemoveAllFromStage();
+			
+			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadScoresComplete });
+		
+			loader.append(new SWFLoader(Main.SWF_BACK_BUTTON + ".swf", { name: Main.SWF_BACK_BUTTON, container: this }));
+			loader.append(new SWFLoader(Main.SWF_SCORES + ".swf", { name: Main.SWF_SCORES, container: this }));
+			loader.load();
+		}
+		
+		private function LoadScoresComplete(e:LoaderEvent)
+		{
+			this.swfBackButton = LoaderMax.getContent(Main.SWF_BACK_BUTTON).rawContent as BackButton;
+			this.swfScores = LoaderMax.getContent(Main.SWF_SCORES).rawContent as Scores;
+			
+			this.swfBackButton.Init();
+			this.swfScores.Init();
+			
+			this.swfBackButton.SetBackButtonOnMouseUp(this.LoadMenuFromMouseEvent);
+			this.BringCursorToFront();
+		}
+		
+		public function LoadScoresFromMouseEvent(e:MouseEvent)
+		{
+			this.LoadScores();
 		}
 		
 		//***********//

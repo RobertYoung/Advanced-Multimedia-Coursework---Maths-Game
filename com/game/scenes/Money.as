@@ -208,13 +208,13 @@
 					numberOfProducts = 1;
 				break;
 				case 2:
-					numberOfProducts = 2;
+					numberOfProducts = 1;
 				break;
 				case 3:
 					numberOfProducts = 2;
 				break;
 				case 4:
-					numberOfProducts = 3;
+					numberOfProducts = 2;
 				break;
 				case 5:
 					numberOfProducts = 3;
@@ -312,7 +312,7 @@
 				
 				if (this.levelNumber == 5)
 				{
-					var correctAlertview:CompleteAlertview = new CompleteAlertview("You have bought all your items successfully!", this.main.LoadPlayFromMouseEvent);
+					var correctAlertview:CompleteAlertview = new CompleteAlertview("You have bought all your items successfully!", this.main.LoadPlayFromMouseEvent, "money", this.GetTotalTimeTaken());
 					
 					this.main.addChild(correctAlertview);
 				}else{
@@ -361,13 +361,13 @@
 		//*****************//
 		private function StartTimer()
 		{
-			this.timer = new Timer(10);
+			this.timer = new Timer(100);
 			this.timer.start();
 		}
 		
 		private function GetTime():Number
 		{
-			return this.timer.currentCount / 100;
+			return this.timer.currentCount / 10;
 		}
 		
 		//*****************//
@@ -377,6 +377,11 @@
 		{
 			MathsSharedObject.getInstance().SetMoneyLevelData(this.levelNumber, this.GetTime());
 			this.StartTimer();
+		}
+		
+		private function GetTotalTimeTaken():Number
+		{
+			return MathsSharedObject.getInstance().GetMoneyTotalTimeTaken();
 		}
 		
 		//*******************//

@@ -102,6 +102,24 @@
 			return this.sharedObject.data["subtraction_level" + level];
 		}
 		
+		public function GetSubtractionTotalTimeTaken():Number
+		{
+			var total:Number = 0;
+			var index:Number = 1;
+			var levelTime:Number;
+			
+			levelTime = this.GetSubtractionLevelData(index);
+			
+			while (!isNaN(levelTime))
+			{
+				total += levelTime;
+				index++;
+				levelTime = this.GetSubtractionLevelData(index);
+			}
+			
+			return total;
+		}
+		
 		//**************************//
 		// MULTIPLICATION FUNCTIONS //
 		//**************************//
@@ -117,6 +135,24 @@
 		public function GetMultiplicationLevelData(level:Number):Number
 		{
 			return this.sharedObject.data["multiplication_level" + level];
+		}
+		
+		public function GetMultiplicationTotalTimeTaken():Number
+		{
+			var total:Number = 0;
+			var index:Number = 1;
+			var levelTime:Number;
+			
+			levelTime = this.GetMultiplicationLevelData(index);
+			
+			while (!isNaN(levelTime))
+			{
+				total += levelTime;
+				index++;
+				levelTime = this.GetMultiplicationLevelData(index);
+			}
+			
+			return total;
 		}
 		
 		//********************//
@@ -136,6 +172,24 @@
 			return this.sharedObject.data["division_level" + level];
 		}
 		
+		public function GetDivisionTotalTimeTaken():Number
+		{
+			var total:Number = 0;
+			var index:Number = 1;
+			var levelTime:Number;
+			
+			levelTime = this.GetDivisionLevelData(index);
+			
+			while (!isNaN(levelTime))
+			{
+				total += levelTime;
+				index++;
+				levelTime = this.GetDivisionLevelData(index);
+			}
+			
+			return total;
+		}
+		
 		//*****************//
 		// MONEY FUNCTIONS //
 		//*****************//
@@ -151,6 +205,24 @@
 		public function GetMoneyLevelData(level:Number):Number
 		{
 			return this.sharedObject.data["money_level" + level];
+		}
+		
+		public function GetMoneyTotalTimeTaken():Number
+		{
+			var total:Number = 0;
+			var index:Number = 1;
+			var levelTime:Number;
+			
+			levelTime = this.GetMoneyLevelData(index);
+			
+			while (!isNaN(levelTime))
+			{
+				total += levelTime;
+				index++;
+				levelTime = this.GetMoneyLevelData(index);
+			}
+			
+			return total;
 		}
 	}
 }

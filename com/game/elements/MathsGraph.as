@@ -99,7 +99,7 @@
 			this.main = this.stage.getChildAt(0) as Main;
 		}
 		
-		private function GetData()
+		public function GetData()
 		{
 			this.additionData = new Array();
 			

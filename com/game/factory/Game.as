@@ -217,13 +217,15 @@
 		//*****************//
 		public function StartScoreTimer()
 		{
-			this.scoreTimer = new Timer(10);
+			this.scoreTimer = new Timer(100);
 			this.scoreTimer.start();
+			trace("timer started");
 		}
 		
 		public function GetScoreTimer():Number
 		{
-			return this.scoreTimer.currentCount / 100;
+			trace(this.scoreTimer.currentCount / 10);
+			return this.scoreTimer.currentCount / 10;
 		}
 		
 		//**************************//

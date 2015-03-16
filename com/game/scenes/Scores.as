@@ -260,7 +260,7 @@
 					var nameTextfield:TextField = this["name" + (i + 1) + "_txt"];
 					var scoreTextfield:TextField = this["score" + (i + 1) + "_txt"];
 					
-					nameTextfield.text = scores[i].child(1).child(0).toString();
+					nameTextfield.text = scores[i].child(1).child(0).toString().toUpperCase();
 					scoreTextfield.text = scores[i].child(3).child(0).toString() + " seconds";
 				}
 			}

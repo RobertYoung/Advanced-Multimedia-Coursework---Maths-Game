@@ -6,8 +6,16 @@
 	import flash.geom.ColorTransform;
 	import com.greensock.TweenMax;
 	import com.greensock.plugins.BevelFilterPlugin;
+	import com.game.factory.MathsSharedObject;
+	import com.game.elements.MathsGraph;
+	import com.game.elements.ConfirmationView;
+	import com.game.factory.Game;
 	
 	public class Stats extends MovieClip {
+
+		// Game variables
+		private var main:Main;
+		private var game:Game;
 		
 		// Elements in SWF file
 		public var addition_mc:MovieClip;
@@ -15,7 +23,8 @@
 		public var multiplication_mc:MovieClip;
 		public var division_mc:MovieClip;
 		public var money_mc:MovieClip;
-		public var graph_mc:MovieClip;
+		public var graph_mc:MathsGraph;
+		public var reset_mc:MovieClip;
 		
 		// Toggle variables
 		private var displayAddition:Boolean = false;
@@ -30,6 +39,8 @@
 		private var multiplicationTween:TweenMax;
 		private var divisionTween:TweenMax;
 		private var moneyTween:TweenMax
+		private var resetTweenGlow:TweenMax;
+		private var resetTweenBevel:TweenMax;
 		
 		// Constant values
 		public static const ADDITION_COLOUR = 0x0099FF;
@@ -44,17 +55,22 @@
 		
 		public function Init()
 		{
+			this.main = this.stage.getChildAt(0) as Main;
+			this.game = this.main.game;
+			
 			this.addition_mc.mouseChildren = false;
 			this.subtraction_mc.mouseChildren = false;
 			this.multiplication_mc.mouseChildren = false;
 			this.division_mc.mouseChildren = false;
 			this.money_mc.mouseChildren = false;
+			this.reset_mc.mouseChildren = false;
 			
 			this.addition_mc.addEventListener(MouseEvent.MOUSE_UP, this.ToggleAddition);
 			this.subtraction_mc.addEventListener(MouseEvent.MOUSE_UP, this.ToggleSubtraction);
 			this.multiplication_mc.addEventListener(MouseEvent.MOUSE_UP, this.ToggleMultiplication);
 			this.division_mc.addEventListener(MouseEvent.MOUSE_UP, this.ToggleDivision);
 			this.money_mc.addEventListener(MouseEvent.MOUSE_UP, this.ToggleMoney)
+			this.reset_mc.addEventListener(MouseEvent.MOUSE_UP, this.ResetConfirmation);
 			
 			this.SetButtonColour("addition", Stats.ADDITION_COLOUR);
 			this.SetButtonColour("subtraction", Stats.SUBTRACTION_COLOUR);
@@ -67,6 +83,8 @@
 			this.BevelTween("multiplication");
 			this.BevelTween("division");
 			this.BevelTween("money");
+			
+			this.SetupResetTween();
 		}
 		
 		//******************//
@@ -231,8 +249,96 @@
 		//*********************//
 		private function BevelTween(level:String)
 		{
-			this[level + "Tween"] = new TweenMax(this[level + "_mc"], 0.2, {bevelFilter:{blurX:20, blurY:20, distance:10, angle:45, strength:5}});
+			if (this[level + "Tween"] == null)
+				this[level + "Tween"] = new TweenMax(this[level + "_mc"], 0.2, {bevelFilter:{blurX:20, blurY:20, distance:10, angle:45, strength:5}});
+					
 			this[level + "Tween"].play();
+		}
+		
+		//*****************//
+		// RESET FUNCTIONS //
+		//*****************//
+		private function ResetConfirmation(e:MouseEvent)
+		{
+			var confirmationView:ConfirmationView = new ConfirmationView(this.ResetStats);
+			
+			this.main.addChild(confirmationView);
+			this.main.BringCursorToFront();
+		}
+		
+		private function ResetStats(e:MouseEvent)
+		{
+			MathsSharedObject.getInstance().ClearData();
+			
+			this.graph_mc.GetData();
+			
+			if (this.displayAddition = true)
+			{
+				this.ToggleAddition(null);
+				this.HideAdditionStats();
+			}
+			
+			if (this.displaySubtraction == true)
+			{
+				this.ToggleSubtraction(null);
+				this.HideSubtractionStats();
+			}
+			
+			if (this.displayMultiplication == true)
+			{
+				this.ToggleMultiplication(null);
+				this.HideMultiplicationStats();
+			}
+			
+			if (this.displayDivision == true)
+			{
+				this.ToggleDivision(null);
+				this.HideDivisionStats();
+			}
+			
+			if (this.displayMoney == true)
+			{
+				this.ToggleMoney(null);
+				this.HideMoneyStats();
+			}
+		}
+		
+		private function SetupResetTween()
+		{
+			if (resetTweenGlow == null)
+			{
+				this.resetTweenGlow = new TweenMax(this.reset_mc, 1, { glowFilter:{color:0x000000, alpha:1, blurX:30, blurY:30, strength: 2} });
+				this.resetTweenGlow.pause();
+				this.reset_mc.addEventListener(MouseEvent.MOUSE_OVER, this.PlayResetTween);
+				this.reset_mc.addEventListener(MouseEvent.MOUSE_OUT, this.ReverseResetTween);
+			}
+			
+			if (this.resetTweenBevel == null)
+			{
+				this.resetTweenBevel = new TweenMax(this.reset_mc, 0.2, {bevelFilter:{blurX:20, blurY:20, distance:3, angle:45, strength:5}});
+				this.reset_mc.addEventListener(MouseEvent.MOUSE_DOWN, this.PushResetTween);
+				this.reset_mc.addEventListener(MouseEvent.MOUSE_UP, this.PullResetTween);
+			}
+		}
+		
+		private function PlayResetTween(e:MouseEvent)
+		{
+			this.resetTweenGlow.play();
+		}
+		
+		private function ReverseResetTween(e:MouseEvent)
+		{
+			this.resetTweenGlow.reverse();
+		}
+		
+		private function PushResetTween(e:MouseEvent)
+		{
+			this.resetTweenBevel.reverse();
+		}
+		
+		private function PullResetTween(e:MouseEvent)
+		{
+			this.resetTweenBevel.play();
 		}
 	}
 }

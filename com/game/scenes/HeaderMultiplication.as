@@ -35,6 +35,7 @@
 			
 			this.SetRandomNumberToMake();
 			this.game.SetMaxWaterLevel(400);
+			this.game.SetWaterLevelReachedMaxFunction(this.main.LoadMultiplicationFromMouseEvent);
 			this.game.SetUpdateScoreFunction(this.RaindropCaught);
 			this.game.SetRaindropMinMaxValues(10, 11);
 			this.SetLevel(1);
@@ -107,7 +108,11 @@
 		{
 			MathsSharedObject.getInstance().SetMultiplicationLevelData(this.levelNumber, this.game.GetScoreTimer());
 			this.game.StartScoreTimer();
-			trace(MathsSharedObject.getInstance().GetMultiplicationLevelData(this.levelNumber));
+		}
+		
+		private function GetTotalTimeTaken():Number
+		{
+			return MathsSharedObject.getInstance().GetMultiplicationTotalTimeTaken();
 		}
 		
 		//*****************//
@@ -130,7 +135,7 @@
 					if (this.levelNumber == 5)
 					{
 						this.game.SetGameComplete();
-						this.game.GameComplete("multiplication", this.main.LoadPlayFromMouseEvent);
+						this.game.GameComplete("multiplication", this.main.LoadPlayFromMouseEvent, this.GetTotalTimeTaken());
 					}else{
 						this.IncrementLevel();
 						this.SetNumber1(0);

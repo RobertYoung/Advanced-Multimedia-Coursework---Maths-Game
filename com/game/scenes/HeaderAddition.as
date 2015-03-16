@@ -38,8 +38,8 @@
 			this.game.SetUpdateScoreFunction(this.SetCurrentNumber);
 			this.game.SetWaterLevelReachedMaxFunction(this.main.LoadAdditionFromMouseEvent);
 			this.SetLevel(1);
-			this.game.SetMaxWaterLevel(500);
-			this.game.SetRaindropMinMaxValues(10, 11);
+			this.game.SetMaxWaterLevel(300);
+			this.game.SetRaindropMinMaxValues(20, 20);
 			this.game.StartRain();
 		}
 		
@@ -153,7 +153,7 @@
 				this.SaveScore();
 				
 				// Correct
-				if (this.levelNumber == 1)
+				if (this.levelNumber == 5)
 				{
 					this.game.SetGameComplete();
 					this.game.GameComplete("addition", this.main.LoadPlayFromMouseEvent, this.GetTotalTimeTaken());

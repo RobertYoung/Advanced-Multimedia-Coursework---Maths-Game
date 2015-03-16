@@ -40,7 +40,8 @@
 			this.game = this.main.game;
 			
 			this.SetupDivision();
-			this.game.SetMaxWaterLevel(400);
+			this.game.SetMaxWaterLevel(300);
+			this.game.SetWaterLevelReachedMaxFunction(this.main.LoadDivideFromMouseEvent);
 			this.game.SetUpdateScoreFunction(this.RaindropCaught);
 			this.game.SetRaindropMinMaxValues(1, 100);
 			this.SetLevel(1);
@@ -153,6 +154,11 @@
 			this.game.StartScoreTimer();
 		}
 		
+		private function GetTotalTimeTaken():Number
+		{
+			return MathsSharedObject.getInstance().GetDivisionTotalTimeTaken();
+		}
+		
 		//*****************//
 		// RAINDROP CAUGHT //
 		//*****************//
@@ -168,7 +174,7 @@
 				if (this.levelNumber == 5)
 				{
 					this.game.SetGameComplete();
-					this.game.GameComplete("divide", this.main.LoadPlayFromMouseEvent);
+					this.game.GameComplete("divide", this.main.LoadPlayFromMouseEvent, this.GetTotalTimeTaken());
 				}else{
 					this.IncrementLevel();
 					this.SetupDivision();

@@ -7,7 +7,6 @@
 	import com.game.scenes.Main;
 	import flash.utils.*;
 	import com.greensock.TweenMax;
-	import fl.transitions.Tween;
 	import com.greensock.easing.*;
 	import com.game.factory.Game;
 	

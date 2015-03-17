@@ -3,10 +3,7 @@
 	import flash.display.MovieClip;
 	import flash.events.Event;
 	import com.greensock.TweenMax;
-	import fl.transitions.Tween;
 	import com.greensock.TimelineMax;
-	import fl.motion.Color;
-	
 	
 	public class ProgressMeter extends MovieClip {
 		

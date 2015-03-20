@@ -43,7 +43,7 @@
 			this.game.SetMaxWaterLevel(300);
 			this.game.SetWaterLevelReachedMaxFunction(this.main.LoadDivideFromMouseEvent);
 			this.game.SetUpdateScoreFunction(this.RaindropCaught);
-			this.game.SetRaindropMinMaxValues(1, 100);
+			this.game.SetRaindropMinMaxValues(1, 10);
 			this.SetLevel(1);
 			this.game.StartRain();
 		}
@@ -53,9 +53,15 @@
 		//*****************//
 		private function SetupDivision()
 		{
-			//this.SetNumber1(0);
-			this.SetRandomNumberToMake();
-			this.SetRandomNumber2();
+			//this.SetRandomNumberToMake();
+			//this.SetRandomNumber2();
+			
+			var number2:Number = this.game.GenerateRandomNumber(1, 10);
+			var numberToMake:Number = this.game.GenerateRandomNumber(1, 10);
+			
+			this.SetNumber2(number2 * numberToMake);
+			this.SetNumberToMake(numberToMake);
+			trace(this.GetNumber2() + " / " + number2 + " = " +numberToMake);
 		}
 		
 		//**************************//
@@ -166,7 +172,7 @@
 		{
 			this.SetNumber1(number);
 			
-			if ((this.number1 / this.number2) == this.GetNumberToMake())
+			if ((this.number2 / this.number1) == this.GetNumberToMake())
 			{
 				this.SaveScore();
 				
@@ -184,7 +190,7 @@
 				}
 			}else{
 				// Incorrect
-				var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", this.number1 + " % " + this.number2 + " does not equal " + this.GetNumberToMake(), this.main.LoadDivideFromMouseEvent);
+				var alertview:IncorrectAlertview = new IncorrectAlertview("Oh no!", this.number2 + " ÷ " + this.number1 + " does not equal " + this.GetNumberToMake(), this.main.LoadDivideFromMouseEvent);
 
 				this.main.addChild(alertview);
 				this.main.game.ResetAfterError();

@@ -32,12 +32,12 @@
 		{
 			this.main = this.stage.getChildAt(0) as Main;
 			this.game = this.main.game;
-			
+		
 			this.SetRandomNumberToMake();
 			this.game.SetMaxWaterLevel(400);
 			this.game.SetWaterLevelReachedMaxFunction(this.main.LoadMultiplicationFromMouseEvent);
 			this.game.SetUpdateScoreFunction(this.RaindropCaught);
-			this.game.SetRaindropMinMaxValues(10, 11);
+			this.game.SetRaindropMinMaxValues(1, 12);
 			this.SetLevel(1);
 			this.game.StartRain();
 		}
@@ -58,7 +58,12 @@
 		
 		private function SetRandomNumberToMake()
 		{
-			this.SetNumberToMake(this.game.GenerateRandomNumber(100, 100));
+			var randomNumber1 = this.game.GenerateRandomNumber(1, 12);
+			var randomNumber2 = this.game.GenerateRandomNumber(1, 12);
+
+			this.SetNumberToMake(randomNumber1 * randomNumber2);
+			
+			trace(randomNumber1 + " x " + randomNumber2 + " = " + this.GetNumberToMake());
 		}
 		
 		//********************//

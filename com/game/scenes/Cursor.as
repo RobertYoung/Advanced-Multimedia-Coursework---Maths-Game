@@ -50,13 +50,13 @@
 		private function CursorRollOut(e:Event)
 		{
 			this.cursor_mc.visible = false;
-			//Mouse.show();
+			Mouse.show();
 		}
 		
 		private function CursorRollOver(e:MouseEvent)
 		{
 			this.cursor_mc.visible = true;
-			//Mouse.hide();
+			Mouse.hide();
 		}
 		
 		private function CursorMove(e:MouseEvent)

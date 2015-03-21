@@ -19,6 +19,7 @@
 		// SWF FILES //
 		//***********//
 		public static const SWF_MAIN:String = "main";
+		public static const SWF_SPLASHSCREEN:String = "splashscreen";
 		public static const SWF_LOGO:String = "logo";
 		public static const SWF_BACK_BUTTON:String = "back_button";
 		public static const SWF_MENU:String = "menu";
@@ -39,6 +40,7 @@
 		// SWF VARIABLES //
 		//***************//
 		public var swfMain:Main;
+		public var swfSplashScreen:SplashScreen;
 		public var swfLogo:Logo;
 		public var swfBackButton:BackButton;
 		public var swfMenu:Menu;
@@ -78,8 +80,35 @@
 		public var game:Game;
 		
 		public function Main() {
-			this.LoadMenu();
+			this.LoadSplashScreen();
 			this.LoadCursor();
+		}
+		
+		//***********//
+		// LOAD MENU //
+		//***********//
+		public function LoadSplashScreen()
+		{
+			this.RemoveAllFromStage();
+			
+			loader = new LoaderMax({ name: "mainQueue", onComplete: LoadSplashScreenComplete });
+			
+			loader.append(new SWFLoader(Main.SWF_SPLASHSCREEN + ".swf", { name: Main.SWF_SPLASHSCREEN, container: this }));
+			loader.load();
+		}
+		
+		private function LoadSplashScreenComplete(e:LoaderEvent)
+		{
+			this.swfSplashScreen = LoaderMax.getContent(Main.SWF_SPLASHSCREEN).rawContent as SplashScreen;
+
+			this.swfSplashScreen.Init();
+			
+			this.BringCursorToFront();
+		}
+		
+		public function LoadSplashScreenFromMouseEvent(e:MouseEvent)
+		{
+			this.LoadSplashScreen();
 		}
 		
 		//***********//

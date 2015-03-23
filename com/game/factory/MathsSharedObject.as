@@ -224,5 +224,23 @@
 			
 			return total;
 		}
+		
+		//*****************//
+		// SOUND FUNCTIONS //
+		//*****************//
+		public function SetSoundOn()
+		{
+			this.sharedObject.data["toggleSound"] = true;
+		}
+		
+		public function SetSoundOff()
+		{
+			this.sharedObject.data["toggleSound"] = false;
+		}
+		
+		public function GetSound():Boolean
+		{
+			return this.sharedObject.data["toggleSound"];
+		}
 	}
 }

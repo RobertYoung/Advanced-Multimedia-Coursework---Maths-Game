@@ -27,6 +27,10 @@
 		// Progress meter variables
 		private var progressMeter:ProgressMeter;
 		
+		// Sound variables
+		private var droplet:Droplet;
+		private var dropletWrong:DropletWrong;
+		
 		public function Game(setMain:Main) {
 			this.main = setMain;
 		}
@@ -147,6 +151,8 @@
 					this.updateScoresFunction(number);
 				
 				raindrop.RemoveRaindrop();
+				
+				this.PlayDropletSound();
 			}
 		}
 		
@@ -219,12 +225,10 @@
 		{
 			this.scoreTimer = new Timer(100);
 			this.scoreTimer.start();
-			trace("timer started");
 		}
 		
 		public function GetScoreTimer():Number
 		{
-			trace(this.scoreTimer.currentCount / 10);
 			return this.scoreTimer.currentCount / 10;
 		}
 		
@@ -251,6 +255,33 @@
 		public function SetNewCurrentNumberProgressMeter(number:Number)
 		{
 			progressMeter.SetCurrentNumber(number, false);
+		}
+		
+		//*****************//
+		// SOUND FUNCTIONS //
+		//*****************//
+		public function PlayDropletSound()
+		{
+			trace("droplet: " + MathsSharedObject.getInstance().GetSound());
+			if (!MathsSharedObject.getInstance().GetSound())
+				return;
+			
+			if (this.droplet == null)
+				this.droplet = new Droplet();
+			
+			this.droplet.play();
+		}
+		
+		public function PlayDropletWrongSound()
+		{
+			trace("droped wrong: " + MathsSharedObject.getInstance().GetSound());
+			if (!MathsSharedObject.getInstance().GetSound())
+				return;
+			
+			if (this.dropletWrong == null)
+				this.dropletWrong = new DropletWrong();
+			
+			this.dropletWrong.play();
 		}
 	}
 }

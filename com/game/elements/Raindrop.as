@@ -6,6 +6,7 @@
 	import com.greensock.easing.*;
 	import com.game.scenes.Main;
 	import flash.events.Event;
+	import com.game.factory.*;
 	
 	public class Raindrop extends MovieClip {
 
@@ -17,6 +18,9 @@
 		
 		// Raindrop variables
 		public var tween:TweenMax;
+		
+		// Sound variables
+		private var dropletWrong:DropletWrong;
 		
 		public function Raindrop(setNumber:Number = 00) {
 			this.SetNumber(setNumber);
@@ -82,6 +86,23 @@
 			
 			if (!this.main.game.InErrorState())
 				this.main.swfWater.IncreaseWaterLevel();
+			
+			this.PlayDropletWrong();
+		}
+		
+		//*****************//
+		// SOUND FUNCTIONS //
+		//*****************//
+		private function PlayDropletWrong()
+		{
+			trace("droped wrong: " + MathsSharedObject.getInstance().GetSound());
+			if (!MathsSharedObject.getInstance().GetSound())
+				return;
+			
+			if (this.dropletWrong == null)
+				this.dropletWrong = new DropletWrong();
+			
+			this.dropletWrong.play();
 		}
 	}
 }

@@ -12,6 +12,7 @@
 		
 		// Elements on swf
 		public var cursor_mc:MovieClip;
+		public var soundButton_mc:MovieClip;
 		
 		// Game variables
 		private var main:Main;
@@ -43,8 +44,6 @@
 			
 			this.cursor_mc.mouseEnabled = false;
 			this.cursor_mc.mouseChildren = false;
-			this.mouseChildren = false;
-			this.mouseEnabled = false;
 		}
 		
 		private function CursorRollOut(e:Event)
@@ -74,6 +73,7 @@
 			}
 			
 			this.clickTween.play();
+			trace(e.target.name);
 		}
 		
 		private function CursorMouseUp(e:MouseEvent)

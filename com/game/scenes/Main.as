@@ -12,6 +12,7 @@
 	import com.game.elements.Wave;
 	import com.game.elements.Mark;
 	import flash.ui.*;
+	import flash.media.SoundChannel;
 	
 	public class Main extends MovieClip {
 
@@ -79,9 +80,16 @@
 		//****************//
 		public var game:Game;
 		
+		//*****************//
+		// SOUND VARIABLES //
+		//*****************//
+		public var themeMusic:ThemeMusic;
+		public var themeMusicChannel:SoundChannel = new SoundChannel();
+		
 		public function Main() {
 			this.LoadSplashScreen();
 			this.LoadCursor();
+			this.PlayThemeMusic();
 		}
 		
 		//***********//
@@ -554,6 +562,22 @@
 		private function HideBackground()
 		{
 			this.background_mc.visible = false;
+		}
+		
+		//*****************//
+		// MUSIC FUNCTIONS //
+		//*****************//
+		public function PlayThemeMusic()
+		{
+			if (this.themeMusic == null)
+				this.themeMusic = new ThemeMusic();
+			
+			this.themeMusicChannel = this.themeMusic.play(0, 99999999);
+		}
+		
+		public function StopThemeMusic()
+		{
+			this.themeMusicChannel.stop();
 		}
 	}
 }

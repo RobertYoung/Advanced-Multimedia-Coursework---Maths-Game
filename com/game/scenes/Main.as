@@ -572,6 +572,7 @@
 			if (this.themeMusic == null)
 				this.themeMusic = new ThemeMusic();
 			
+			this.themeMusicChannel.stop();
 			this.themeMusicChannel = this.themeMusic.play(0, 99999999);
 		}
 		

@@ -153,7 +153,7 @@
 				this.SaveScore();
 				
 				// Correct
-				if (this.levelNumber == 5)
+				if (this.levelNumber == 1)
 				{
 					this.game.SetGameComplete();
 					this.game.GameComplete("addition", this.main.LoadPlayFromMouseEvent, this.GetTotalTimeTaken());

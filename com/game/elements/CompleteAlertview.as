@@ -28,6 +28,9 @@
 		private var nextTween:TimelineMax;
 		private var saveTween:TimelineMax;
 		
+		// Function variables
+		private var nextFunction:Function;
+		
 		public function CompleteAlertview(setDescription:String, setNextButtonFunction:Function, setLevelName:String = "", setTotalScore:Number = 0) {
 			this.SetDescription(setDescription);
 			this.SetNextButtonFunction(setNextButtonFunction);
@@ -65,7 +68,8 @@
 		//***********************//
 		public function SetNextButtonFunction(setFunction:Function)
 		{
-			this.next_btn.addEventListener(MouseEvent.MOUSE_UP, setFunction);
+			this.nextFunction = setFunction;
+			this.next_btn.addEventListener(MouseEvent.MOUSE_UP, NextMouseUp);
 		}
 		
 		private function ButtonTweens()
@@ -92,13 +96,34 @@
 		//***********************//
 		// SAVE BUTTON FUNCTIONS //
 		//***********************//
-		public function SaveScore(e:MouseEvent)
+		public function SaveScore(e:MouseEvent = null)
 		{
 			trace("level: " + this.levelName, " score: " + this.totalScore + " name: " + this.name_txt.text);
+
+			if (this.name_txt.text.length == 0)
+			{
+				this.name_txt.text = "Please enter your name here";
+				return;
+			}
 			
 			var webService:MathsWebService = new MathsWebService();
 			
 			webService.SaveScore(this.levelName, this.totalScore, this.name_txt.text);
+			
+			this.nextFunction(null);
+		}
+		
+		//***********************//
+		// NEXT BUTTON FUNCTIONS //
+		//***********************//
+		public function NextMouseUp(e:MouseEvent = null)
+		{
+			if (this.name_txt.text.length > 0)
+			{
+				this.SaveScore();
+			}else{
+				this.nextFunction(null);
+			}
 		}
 	}
 }
